@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "LoginNavController.h"
 
 @interface AppDelegate ()<UITabBarControllerDelegate>
 
@@ -23,7 +24,10 @@
     self.window.backgroundColor = [UIColor whiteColor];
     RootViewController *vc = [[RootViewController alloc] init];
     vc.delegate = self;
-    self.window.rootViewController = vc;
+    
+    LoginNavController *login = [[LoginNavController alloc] init];
+    
+    self.window.rootViewController = login;
     [self.window makeKeyAndVisible];
     
     return YES;
