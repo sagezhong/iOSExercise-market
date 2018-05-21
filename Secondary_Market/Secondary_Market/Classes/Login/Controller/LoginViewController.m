@@ -9,6 +9,9 @@
 #import "LoginViewController.h"
 #import "AFNetworking.h"
 #import "RootViewController.h"
+#import "SVProgressHUD.h"
+#import "UserInfomation.h"
+#import "AppDelegate.h"
 
 
 @interface LoginViewController ()
@@ -37,27 +40,123 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//按下登录按钮
 - (void)Login {
-    NSString *url = @"http://119.23.230.116/xianyu/login?account=xiaoqiang&password=xiaoqiang";
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    if (_loginView.userName.text.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"请输入你的用户名"];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    } else if (_loginView.password.text.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"请输入密码"];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    }
+    else {
+        [self LoginNetwork];
+    }
     
-    [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+}
+// 登录访问
+- (void)LoginNetwork {
+    // 异步任务主线程
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *userStr = [_loginView.userName text];
+        NSString *passStr = [_loginView.password text];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer.timeoutInterval = 10.0f;
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/plain" ,nil];
+        
+        //请求参数
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:userStr,@"id",passStr,@"password", nil];
+        
+        [manager GET:@"http://119.23.230.116/xianyu/login/" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            //打印结果
+            NSLog(@"结果%@",responseObject);
+            
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            // NSLog(@"返回结果: %@",dict);
+            
+            NSString *LoginResult = [dict objectForKey:@"data"];
+            NSLog(@"%@",LoginResult);
+            
+            if ([LoginResult isEqual: @"没有此账号"]) {
+                [SVProgressHUD showInfoWithStatus:@"该用户尚未注册"];
+                [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [SVProgressHUD dismiss];
+                });
+            }
+           else if ([LoginResult isEqual:@"密码错误"]) {
+                [SVProgressHUD showInfoWithStatus:@"账户或密码错误"];
+                [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [SVProgressHUD dismiss];
+                });
+            }
+            
+           else if ([LoginResult isEqual:@"登录成功"]) {
+                [SVProgressHUD showInfoWithStatus:@"登录成功"];
+                [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [SVProgressHUD dismiss];
+                });
+                
+                // 存储用户的信息
+                
+               NSDictionary *userdic = [NSDictionary dictionaryWithObjectsAndKeys:userStr,@"id",passStr,@"password", nil];
+               
+               NSLog(@"%@",userdic);
+                [UserInfomation saveUserInfomation:userdic];
+                // 更改用户登录状态
+              
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setBool:YES forKey:@"haveLogin"];
+                [userDefaults setObject:userStr forKey:@"userid"];
+                [userDefaults synchronize];
+                
+               // [UserInfomation saveUserInfomation:userdic];
+              
+                NSLog(@"检测登录成功");
+            
+                
+                
+                
+            }
+            
+            // NSLog(@"date结果是:%@",LoginResult);
+            
+            //
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            
+            [SVProgressHUD showInfoWithStatus:@"网络状态异常"];
+            [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+                
+            });
+            
+            
+            
+        }];
+        
+        
+    });
     
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"请求成功");
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"请求失败");
-    }];
     
-    
-    
+/*  页面跳转
+    RootViewController *vc = [[RootViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
+*/
 }
 
-- (void) HaveInterner
-{
-    
-}
 
 /*
 #pragma mark - Navigation

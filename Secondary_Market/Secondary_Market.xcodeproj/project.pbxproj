@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
 		0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2A20B1923E00B5C834 /* LoginNavController.m */; };
+		831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 831295B120B2C0B40019F6C3 /* UserInfomation.m */; };
 		83F67C1020B04F4200B9292F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F67C0F20B04F4200B9292F /* AppDelegate.m */; };
 		83F67C1320B04F4200B9292F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F67C1220B04F4200B9292F /* ViewController.m */; };
 		83F67C1620B04F4200B9292F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83F67C1420B04F4200B9292F /* Main.storyboard */; };
@@ -54,6 +55,8 @@
 		0C782A2920B1923E00B5C834 /* LoginNavController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNavController.h; sourceTree = "<group>"; };
 		0C782A2A20B1923E00B5C834 /* LoginNavController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginNavController.m; sourceTree = "<group>"; };
 		53B3CC458F0D252F890DEDFD /* libPods-Secondary_Market.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Secondary_Market.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		831295B020B2C0B40019F6C3 /* UserInfomation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfomation.h; sourceTree = "<group>"; };
+		831295B120B2C0B40019F6C3 /* UserInfomation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfomation.m; sourceTree = "<group>"; };
 		83F67C0B20B04F4200B9292F /* Secondary_Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secondary_Market.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83F67C0E20B04F4200B9292F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		83F67C0F20B04F4200B9292F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -140,6 +143,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		831295AF20B2C0040019F6C3 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				831295B020B2C0B40019F6C3 /* UserInfomation.h */,
+				831295B120B2C0B40019F6C3 /* UserInfomation.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		83F67C0220B04F4200B9292F = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +218,7 @@
 				83F67C4320B051A500B9292F /* CommunityView */,
 				83F67C4420B051ED00B9292F /* MessageView */,
 				83F67C4520B0527500B9292F /* UserView */,
+				831295AF20B2C0040019F6C3 /* Tools */,
 				83F67C8120B1139500B9292F /* Login */,
 			);
 			path = Classes;
@@ -368,7 +381,6 @@
 				83F67C0720B04F4200B9292F /* Sources */,
 				83F67C0820B04F4200B9292F /* Frameworks */,
 				83F67C0920B04F4200B9292F /* Resources */,
-				856DC037D935DF0DD5229B1D /* [CP] Embed Pods Frameworks */,
 				C40F3616E35C0FCBD76AB48B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -507,30 +519,18 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		856DC037D935DF0DD5229B1D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Secondary_Market/Pods-Secondary_Market-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C40F3616E35C0FCBD76AB48B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Secondary_Market/Pods-Secondary_Market-resources.sh",
+				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -544,6 +544,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */,
 				83F67C1320B04F4200B9292F /* ViewController.m in Sources */,
 				0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */,
 				83F67C6620B0669500B9292F /* MessageViewController.m in Sources */,
@@ -726,7 +727,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JJDMPBT9B3;
 				INFOPLIST_FILE = Secondary_Market/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "sagezhong.Secondary-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -742,7 +743,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JJDMPBT9B3;
 				INFOPLIST_FILE = Secondary_Market/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "sagezhong.Secondary-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
