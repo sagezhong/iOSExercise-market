@@ -70,18 +70,20 @@
     
     //注册按钮
     self.registerBtn = [[UIButton alloc] init];
-    self.registerBtn.frame = CGRectMake(75/2, 380, 40, 40);
+    self.registerBtn.frame = CGRectMake(70/2, 380, 40, 40);
     [self.registerBtn setTitle:@"注册" forState:UIControlStateNormal];
+    self.registerBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.registerBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.registerBtn setTitleColor:[UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1.0] forState:UIControlStateHighlighted];
     [self addSubview:self.registerBtn];
     
     //忘记密码
     self.seekBtn = [[UIButton alloc] init];
-    self.seekBtn.frame = CGRectMake(355-75/2-60, 380, 80, 40);
+    self.seekBtn.frame = CGRectMake(355-75/2-55, 380, 80, 40);
     [self.seekBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
     [self.seekBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.seekBtn setTitleColor:[UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1.0] forState:UIControlStateHighlighted];
+    self.seekBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [self addSubview:self.seekBtn];
     
     

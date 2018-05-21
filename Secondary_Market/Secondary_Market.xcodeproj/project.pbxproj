@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C1F449A20B2EB4B00D177A5 /* RegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F449920B2EB4B00D177A5 /* RegisterView.m */; };
+		0C1F44A020B2EDC600D177A5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F449F20B2EDC600D177A5 /* RegisterViewController.m */; };
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
 		0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2A20B1923E00B5C834 /* LoginNavController.m */; };
 		831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 831295B120B2C0B40019F6C3 /* UserInfomation.m */; };
@@ -50,6 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C1F449820B2EB4B00D177A5 /* RegisterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterView.h; sourceTree = "<group>"; };
+		0C1F449920B2EB4B00D177A5 /* RegisterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterView.m; sourceTree = "<group>"; };
+		0C1F449E20B2EDC600D177A5 /* RegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		0C1F449F20B2EDC600D177A5 /* RegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		0C782A2620B18F1400B5C834 /* LoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		0C782A2720B18F1400B5C834 /* LoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		0C782A2920B1923E00B5C834 /* LoginNavController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNavController.h; sourceTree = "<group>"; };
@@ -125,6 +131,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C1F449520B2EAB900D177A5 /* RegisterView */ = {
+			isa = PBXGroup;
+			children = (
+				0C1F449720B2EB2A00D177A5 /* Controller */,
+				0C1F449620B2EB2000D177A5 /* View */,
+			);
+			path = RegisterView;
+			sourceTree = "<group>";
+		};
+		0C1F449620B2EB2000D177A5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0C1F449820B2EB4B00D177A5 /* RegisterView.h */,
+				0C1F449920B2EB4B00D177A5 /* RegisterView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0C1F449720B2EB2A00D177A5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0C1F449E20B2EDC600D177A5 /* RegisterViewController.h */,
+				0C1F449F20B2EDC600D177A5 /* RegisterViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		0C782A2520B18F0600B5C834 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +252,7 @@
 				83F67C4420B051ED00B9292F /* MessageView */,
 				83F67C4520B0527500B9292F /* UserView */,
 				831295AF20B2C0040019F6C3 /* Tools */,
+				0C1F449520B2EAB900D177A5 /* RegisterView */,
 				83F67C8120B1139500B9292F /* Login */,
 			);
 			path = Classes;
@@ -549,6 +583,7 @@
 				0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */,
 				83F67C6620B0669500B9292F /* MessageViewController.m in Sources */,
 				83F67C7D20B1000200B9292F /* MCTabBar.m in Sources */,
+				0C1F449A20B2EB4B00D177A5 /* RegisterView.m in Sources */,
 				0C782A2820B18F1400B5C834 /* LoginView.m in Sources */,
 				83F67C6020B065E500B9292F /* FirstViewController.m in Sources */,
 				83F67C8020B1138D00B9292F /* LoginViewController.m in Sources */,
@@ -558,6 +593,7 @@
 				83F67C1E20B04F4200B9292F /* main.m in Sources */,
 				83F67C4B20B0534A00B9292F /* RootViewController.m in Sources */,
 				83F67C5C20B057B100B9292F /* UserViewNavController.m in Sources */,
+				0C1F44A020B2EDC600D177A5 /* RegisterViewController.m in Sources */,
 				83F67C6920B066AA00B9292F /* UserViewController.m in Sources */,
 				83F67C5720B055F200B9292F /* MessageViewNavController.m in Sources */,
 				83F67C1020B04F4200B9292F /* AppDelegate.m in Sources */,

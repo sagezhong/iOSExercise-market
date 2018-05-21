@@ -12,6 +12,7 @@
 #import "SVProgressHUD.h"
 #import "UserInfomation.h"
 #import "AppDelegate.h"
+#import "RegisterViewController.h"
 
 
 @interface LoginViewController ()
@@ -24,13 +25,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"登录";
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     
+  @{NSFontAttributeName:[UIFont systemFontOfSize:19],
+    
+    NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
     _loginView = [[LoginView alloc] init];
     _loginView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     //给登录按钮注册登录事件
     
     [self.loginView.loginBtn addTarget:self action:@selector(Login) forControlEvents:UIControlEventTouchUpInside];
+    [self.loginView.registerBtn addTarget:self action:@selector(Register) forControlEvents:UIControlEventTouchUpInside];
+    
     
     [self.view addSubview:_loginView];
+    
+
     
     
     
@@ -40,6 +52,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//按下注册按钮
+- (void)Register
+{
+    RegisterViewController *vc = [[RegisterViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+
 //按下登录按钮
 - (void)Login {
     if (_loginView.userName.text.length == 0) {
@@ -116,13 +137,17 @@
                 // 更改用户登录状态
               
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setBool:YES forKey:@"haveLogin"];
-                [userDefaults setObject:userStr forKey:@"userid"];
+                [userDefaults setBool:YES forKey:@"havdLogin"];
+               
                 [userDefaults synchronize];
                 
-               // [UserInfomation saveUserInfomation:userdic];
+              
               
                 NSLog(@"检测登录成功");
+               
+               //跳转至 首页
+               RootViewController *vc = [[RootViewController alloc] init];
+               [self presentViewController:vc animated:YES completion:nil];
             
                 
                 

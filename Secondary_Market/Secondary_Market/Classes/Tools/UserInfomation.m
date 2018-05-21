@@ -47,16 +47,18 @@
         userRegisterTime = @"";                              // 用户注册时间
     }
     
-    
-    NSArray *valueArray = [NSArray arrayWithObjects:userID,userPhone,loginPassword,userName,userSex,userDepartment,userRegisterTime, nil];
-    NSArray *keyArray = [NSArray arrayWithObjects:@"id",@"phone",@"password",@"name",@"sex",@"department",@"registertime", nil];
-    
-    //存储用户信息 双重字典
-    NSDictionary *userDic = [NSDictionary dictionaryWithObject:valueArray forKey:keyArray];
+
     
     //存储用户信息
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:userDic forKey:@"userInformation"];
+    [userDefaults setObject:userID forKey:@"id"];
+    [userDefaults setObject:loginPassword forKey:@"password"];
+    [userDefaults setObject:userPhone forKey:@"phone"];
+    [userDefaults setObject:userName forKey:@"name"];
+    [userDefaults setObject:userSex forKey:@"sex"];
+    [userDefaults setObject:userDepartment forKey:@"department"];
+    [userDefaults setObject:userRegisterTime forKey:@"registertime"];
+  //  [userDefaults setObject:userDic forKey:@"userInformation"];
     [userDefaults synchronize];
     
     //通过这样封装 取用户数据先从userDefaults取出 userInformation对应的字典, 再从字典中取出用户信息

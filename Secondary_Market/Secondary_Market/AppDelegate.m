@@ -27,7 +27,20 @@
     
     LoginNavController *login = [[LoginNavController alloc] init];
     
-    self.window.rootViewController = login;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    BOOL hadLogin = [userDefaults boolForKey:@"haveLogin"];
+    
+ 
+    
+    if (hadLogin == YES) {
+        self.window.rootViewController = vc;
+    } else {
+        self.window.rootViewController = login;
+    }
+    
+    
+ 
     [self.window makeKeyAndVisible];
     
     return YES;
