@@ -185,6 +185,13 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
+		835D0D5420B40AB900831257 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		83F67C0220B04F4200B9292F = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +302,7 @@
 		83F67C4520B0527500B9292F /* UserView */ = {
 			isa = PBXGroup;
 			children = (
+				835D0D5420B40AB900831257 /* View */,
 				83F67C5D20B0580E00B9292F /* Controller */,
 			);
 			path = UserView;

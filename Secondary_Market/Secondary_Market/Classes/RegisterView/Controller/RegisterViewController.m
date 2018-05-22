@@ -45,12 +45,19 @@
     
     
     if (_registerView.userName.text.length == 0) {
-        [SVProgressHUD showInfoWithStatus:@"请输入用户名"];
+        [SVProgressHUD showInfoWithStatus:@"请输入账号"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
         });
-    }else if (_registerView.password.text.length == 0) {
+    } else if (_registerView.userName.text.length !=13) {
+        [SVProgressHUD showInfoWithStatus:@"账号必须为学号"];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    }
+    else if (_registerView.password.text.length == 0) {
         [SVProgressHUD showInfoWithStatus:@"请输入密码"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

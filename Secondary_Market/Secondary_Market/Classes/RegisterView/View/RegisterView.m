@@ -14,6 +14,8 @@
 {
     self = [super init];
     
+    self.backgroundColor = [UIColor whiteColor];
+    
     UIImage *logoImage = [UIImage imageNamed:@"logo"];
     self.logo = [[UIImageView alloc] initWithImage:logoImage];
     self.logo.frame = CGRectMake(375/2-75/2, 100, 75, 75);

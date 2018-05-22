@@ -20,6 +20,8 @@
 - (instancetype)init
 {
     self = [super init];
+    
+    self.backgroundColor = [UIColor whiteColor];
     //用户图标
     UIImage *userImage = [UIImage imageNamed:@"username"];
     self.userView = [[UIImageView alloc] initWithImage:userImage];
@@ -37,7 +39,7 @@
     self.userName.borderStyle = UITextBorderStyleRoundedRect;
     self.userName.leftView = self.userView;
     self.userName.leftViewMode = UITextFieldViewModeAlways;
-    self.userName.keyboardType = UIKeyboardTypeASCIICapable;
+    self.userName.keyboardType = UIKeyboardTypeNumberPad;
     self.userName.clearButtonMode = UITextFieldViewModeAlways;
     [self addSubview:self.userName];
 

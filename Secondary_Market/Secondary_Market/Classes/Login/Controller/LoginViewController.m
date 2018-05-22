@@ -104,6 +104,7 @@
             // NSLog(@"返回结果: %@",dict);
             
             NSString *LoginResult = [dict objectForKey:@"data"];
+            NSDictionary *userdict = [dict objectForKey:@"user"];
             NSLog(@"%@",LoginResult);
             
             if ([LoginResult isEqual: @"没有此账号"]) {
@@ -114,6 +115,7 @@
                 });
             }
            else if ([LoginResult isEqual:@"密码错误"]) {
+               
                 [SVProgressHUD showInfoWithStatus:@"账户或密码错误"];
                 [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -130,10 +132,10 @@
                 
                 // 存储用户的信息
                 
-               NSDictionary *userdic = [NSDictionary dictionaryWithObjectsAndKeys:userStr,@"id",passStr,@"password", nil];
+              // NSDictionary *userdic = [NSDictionary dictionaryWithObjectsAndKeys:userStr,@"id",passStr,@"password", nil];
                
-               NSLog(@"%@",userdic);
-                [UserInfomation saveUserInfomation:userdic];
+              // NSLog(@"%@",userdic);
+                [UserInfomation saveUserInfomation:userdict];
                 // 更改用户登录状态
               
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

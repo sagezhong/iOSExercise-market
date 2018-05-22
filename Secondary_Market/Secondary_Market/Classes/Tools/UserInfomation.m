@@ -42,9 +42,9 @@
         userSex = @"";
     }
     
-    NSString *userRegisterTime = [userDictionry objectForKey:@"registertime"];
+    NSDate *userRegisterTime = [userDictionry objectForKey:@"registertime"];
     if ([userRegisterTime isKindOfClass:[NSNull class]]) {
-        userRegisterTime = @"";                              // 用户注册时间
+        userRegisterTime = [[NSDate alloc] init];                              // 用户注册时间
     }
     
 
