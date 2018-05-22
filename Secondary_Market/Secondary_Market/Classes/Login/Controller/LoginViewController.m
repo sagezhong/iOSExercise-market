@@ -106,6 +106,7 @@
             NSString *LoginResult = [dict objectForKey:@"data"];
             NSDictionary *userdict = [dict objectForKey:@"user"];
             NSLog(@"%@",LoginResult);
+            NSLog(@"%@",userdict);
             
             if ([LoginResult isEqual: @"没有此账号"]) {
                 [SVProgressHUD showInfoWithStatus:@"该用户尚未注册"];
@@ -142,7 +143,10 @@
                 [userDefaults setBool:YES forKey:@"havdLogin"];
                
                 [userDefaults synchronize];
-                
+               // 打印用户注册时间
+               NSDate *date = [userDefaults objectForKey:@"registertime"];
+               NSLog(@"date:%@",date);
+
               
               
                 NSLog(@"检测登录成功");
