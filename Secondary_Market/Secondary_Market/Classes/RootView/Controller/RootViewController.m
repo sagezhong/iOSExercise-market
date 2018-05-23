@@ -61,6 +61,7 @@
     nav4.tabBarItem.image = [UIImage imageNamed:@"tabme_n"];
     nav4.tabBarItem.selectedImage = [UIImage imageNamed:@"tabme_s"];
     
+
 /*    MyTabBar *myTabBar = [[MyTabBar alloc] init];
     myTabBar.myTabBarDelegate = self;
          //利用KVC替换默认的TabBar

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0C1F449A20B2EB4B00D177A5 /* RegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F449920B2EB4B00D177A5 /* RegisterView.m */; };
 		0C1F44A020B2EDC600D177A5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F449F20B2EDC600D177A5 /* RegisterViewController.m */; };
+		0C6A867120B585AB00C8D350 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A867020B585AB00C8D350 /* UserTableViewCell.m */; };
+		0C6A867520B59DA800C8D350 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A867420B59DA800C8D350 /* UserInfoViewController.m */; };
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
 		0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2A20B1923E00B5C834 /* LoginNavController.m */; };
 		831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 831295B120B2C0B40019F6C3 /* UserInfomation.m */; };
@@ -56,6 +58,10 @@
 		0C1F449920B2EB4B00D177A5 /* RegisterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterView.m; sourceTree = "<group>"; };
 		0C1F449E20B2EDC600D177A5 /* RegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		0C1F449F20B2EDC600D177A5 /* RegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		0C6A866F20B585AB00C8D350 /* UserTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
+		0C6A867020B585AB00C8D350 /* UserTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
+		0C6A867320B59DA800C8D350 /* UserInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
+		0C6A867420B59DA800C8D350 /* UserInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
 		0C782A2620B18F1400B5C834 /* LoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		0C782A2720B18F1400B5C834 /* LoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		0C782A2920B1923E00B5C834 /* LoginNavController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNavController.h; sourceTree = "<group>"; };
@@ -158,6 +164,32 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		0C6A866E20B5858600C8D350 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0C6A866F20B585AB00C8D350 /* UserTableViewCell.h */,
+				0C6A867020B585AB00C8D350 /* UserTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0C6A867220B59D6B00C8D350 /* UserInfomation */ = {
+			isa = PBXGroup;
+			children = (
+				0C6A867620B59DAD00C8D350 /* Controller */,
+			);
+			path = UserInfomation;
+			sourceTree = "<group>";
+		};
+		0C6A867620B59DAD00C8D350 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0C6A867320B59DA800C8D350 /* UserInfoViewController.h */,
+				0C6A867420B59DA800C8D350 /* UserInfoViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		0C782A2520B18F0600B5C834 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,13 +215,6 @@
 				831295B120B2C0B40019F6C3 /* UserInfomation.m */,
 			);
 			path = Tools;
-			sourceTree = "<group>";
-		};
-		835D0D5420B40AB900831257 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		83F67C0220B04F4200B9292F = {
@@ -261,6 +286,7 @@
 				831295AF20B2C0040019F6C3 /* Tools */,
 				0C1F449520B2EAB900D177A5 /* RegisterView */,
 				83F67C8120B1139500B9292F /* Login */,
+				0C6A867220B59D6B00C8D350 /* UserInfomation */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -302,7 +328,7 @@
 		83F67C4520B0527500B9292F /* UserView */ = {
 			isa = PBXGroup;
 			children = (
-				835D0D5420B40AB900831257 /* View */,
+				0C6A866E20B5858600C8D350 /* View */,
 				83F67C5D20B0580E00B9292F /* Controller */,
 			);
 			path = UserView;
@@ -591,6 +617,7 @@
 				0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */,
 				83F67C6620B0669500B9292F /* MessageViewController.m in Sources */,
 				83F67C7D20B1000200B9292F /* MCTabBar.m in Sources */,
+				0C6A867520B59DA800C8D350 /* UserInfoViewController.m in Sources */,
 				0C1F449A20B2EB4B00D177A5 /* RegisterView.m in Sources */,
 				0C782A2820B18F1400B5C834 /* LoginView.m in Sources */,
 				83F67C6020B065E500B9292F /* FirstViewController.m in Sources */,
@@ -598,6 +625,7 @@
 				83F67C6320B0665F00B9292F /* CommunityViewController.m in Sources */,
 				83F67C4E20B0539300B9292F /* FirstViewNavigationController.m in Sources */,
 				83F67C5420B055A600B9292F /* CommunityViewNavController.m in Sources */,
+				0C6A867120B585AB00C8D350 /* UserTableViewCell.m in Sources */,
 				83F67C1E20B04F4200B9292F /* main.m in Sources */,
 				83F67C4B20B0534A00B9292F /* RootViewController.m in Sources */,
 				83F67C5C20B057B100B9292F /* UserViewNavController.m in Sources */,

@@ -8,8 +8,10 @@
 
 #import "UserViewController.h"
 #import "LoginNavController.h"
+#import "UserTableViewCell.h"
+#import "UserInfoViewController.h"
 
-@interface UserViewController ()
+@interface UserViewController () <UITableViewDelegate,UITableViewDataSource>
 
 @end
 
@@ -19,8 +21,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    
+    [self.view addSubview:tableView];
+    
     self.title = @"我";
-    UIButton *quiteBtn = [[UIButton alloc] init];
+/*    UIButton *quiteBtn = [[UIButton alloc] init];
     quiteBtn.frame = CGRectMake(125/2, 500, 250, 40);
     [quiteBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [quiteBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -30,7 +39,7 @@
     [quiteBtn addTarget:self action:@selector(Quit) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:quiteBtn];
-    
+   */
     
 }
 
@@ -52,14 +61,47 @@
     
     
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    UserTableViewCell *cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
+    return cell;
 }
-*/
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+    return 1;
+    }
+    if (section == 1) {
+        return 5;
+    }
+    else {
+        return 1;
+    }
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0) {
+        return 90;
+    } else {
+        return 40;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 15;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        UserInfoViewController *UserVC = [[UserInfoViewController alloc] init];
+        [self.navigationController pushViewController:UserVC animated:YES];
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 @end
