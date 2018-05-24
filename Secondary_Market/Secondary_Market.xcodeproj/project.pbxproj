@@ -14,6 +14,8 @@
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
 		0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2A20B1923E00B5C834 /* LoginNavController.m */; };
 		831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 831295B120B2C0B40019F6C3 /* UserInfomation.m */; };
+		8338D19620B65214008B9343 /* UserSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8338D19520B65214008B9343 /* UserSetViewController.m */; };
+		8338D19B20B6B0A7008B9343 /* SetNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8338D19A20B6B0A7008B9343 /* SetNameViewController.m */; };
 		83F67C1020B04F4200B9292F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F67C0F20B04F4200B9292F /* AppDelegate.m */; };
 		83F67C1320B04F4200B9292F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F67C1220B04F4200B9292F /* ViewController.m */; };
 		83F67C1620B04F4200B9292F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83F67C1420B04F4200B9292F /* Main.storyboard */; };
@@ -69,6 +71,10 @@
 		53B3CC458F0D252F890DEDFD /* libPods-Secondary_Market.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Secondary_Market.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831295B020B2C0B40019F6C3 /* UserInfomation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfomation.h; sourceTree = "<group>"; };
 		831295B120B2C0B40019F6C3 /* UserInfomation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfomation.m; sourceTree = "<group>"; };
+		8338D19420B65214008B9343 /* UserSetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserSetViewController.h; sourceTree = "<group>"; };
+		8338D19520B65214008B9343 /* UserSetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserSetViewController.m; sourceTree = "<group>"; };
+		8338D19920B6B0A7008B9343 /* SetNameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetNameViewController.h; sourceTree = "<group>"; };
+		8338D19A20B6B0A7008B9343 /* SetNameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetNameViewController.m; sourceTree = "<group>"; };
 		83F67C0B20B04F4200B9292F /* Secondary_Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secondary_Market.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83F67C0E20B04F4200B9292F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		83F67C0F20B04F4200B9292F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -176,6 +182,7 @@
 		0C6A867220B59D6B00C8D350 /* UserInfomation */ = {
 			isa = PBXGroup;
 			children = (
+				8338D19720B6B015008B9343 /* ChildVIew */,
 				0C6A867620B59DAD00C8D350 /* Controller */,
 			);
 			path = UserInfomation;
@@ -215,6 +222,40 @@
 				831295B120B2C0B40019F6C3 /* UserInfomation.m */,
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		8338D19220B651B5008B9343 /* UserSet */ = {
+			isa = PBXGroup;
+			children = (
+				8338D19320B651DE008B9343 /* Controller */,
+			);
+			path = UserSet;
+			sourceTree = "<group>";
+		};
+		8338D19320B651DE008B9343 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8338D19420B65214008B9343 /* UserSetViewController.h */,
+				8338D19520B65214008B9343 /* UserSetViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8338D19720B6B015008B9343 /* ChildVIew */ = {
+			isa = PBXGroup;
+			children = (
+				8338D19820B6B02F008B9343 /* SetName */,
+			);
+			path = ChildVIew;
+			sourceTree = "<group>";
+		};
+		8338D19820B6B02F008B9343 /* SetName */ = {
+			isa = PBXGroup;
+			children = (
+				8338D19920B6B0A7008B9343 /* SetNameViewController.h */,
+				8338D19A20B6B0A7008B9343 /* SetNameViewController.m */,
+			);
+			path = SetName;
 			sourceTree = "<group>";
 		};
 		83F67C0220B04F4200B9292F = {
@@ -287,6 +328,7 @@
 				0C1F449520B2EAB900D177A5 /* RegisterView */,
 				83F67C8120B1139500B9292F /* Login */,
 				0C6A867220B59D6B00C8D350 /* UserInfomation */,
+				8338D19220B651B5008B9343 /* UserSet */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -614,10 +656,12 @@
 			files = (
 				831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */,
 				83F67C1320B04F4200B9292F /* ViewController.m in Sources */,
+				8338D19B20B6B0A7008B9343 /* SetNameViewController.m in Sources */,
 				0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */,
 				83F67C6620B0669500B9292F /* MessageViewController.m in Sources */,
 				83F67C7D20B1000200B9292F /* MCTabBar.m in Sources */,
 				0C6A867520B59DA800C8D350 /* UserInfoViewController.m in Sources */,
+				8338D19620B65214008B9343 /* UserSetViewController.m in Sources */,
 				0C1F449A20B2EB4B00D177A5 /* RegisterView.m in Sources */,
 				0C782A2820B18F1400B5C834 /* LoginView.m in Sources */,
 				83F67C6020B065E500B9292F /* FirstViewController.m in Sources */,

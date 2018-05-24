@@ -98,15 +98,16 @@
         
         [manager GET:@"http://119.23.230.116/xianyu/login/" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             //打印结果
-            NSLog(@"结果%@",responseObject);
+           // NSLog(@"结果%@",responseObject);
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-            // NSLog(@"返回结果: %@",dict);
+           //  NSLog(@"返回结果: %@",dict);
             
             NSString *LoginResult = [dict objectForKey:@"data"];
             NSDictionary *userdict = [dict objectForKey:@"user"];
             NSLog(@"%@",LoginResult);
             NSLog(@"%@",userdict);
+            NSLog(@"%@",[userdict objectForKey:@"name"]);
             
             if ([LoginResult isEqual: @"没有此账号"]) {
                 [SVProgressHUD showInfoWithStatus:@"该用户尚未注册"];
@@ -140,12 +141,12 @@
                 // 更改用户登录状态
               
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setBool:YES forKey:@"havdLogin"];
+                [userDefaults setBool:YES forKey:@"haveLogin"];
                
                 [userDefaults synchronize];
                // 打印用户注册时间
-               NSDate *date = [userDefaults objectForKey:@"registertime"];
-               NSLog(@"date:%@",date);
+           //    NSDate *date = [userDefaults objectForKey:@"registertime"];
+            //   NSLog(@"date:%@",date);
 
               
               

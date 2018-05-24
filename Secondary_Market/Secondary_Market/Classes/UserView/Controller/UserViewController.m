@@ -10,8 +10,11 @@
 #import "LoginNavController.h"
 #import "UserTableViewCell.h"
 #import "UserInfoViewController.h"
+#import "UserSetViewController.h"
 
 @interface UserViewController () <UITableViewDelegate,UITableViewDataSource>
+
+
 
 @end
 
@@ -48,28 +51,17 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)Quit {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool: NO forKey:@"haveLogin"];
-    
-    [userDefaults synchronize];
-    
-    LoginNavController *vc = [[LoginNavController alloc] init];
-    
-    [self presentViewController:vc animated:NO completion:nil];
-    
-    
-    
+
+
+#pragma mark  - TableView代理方法
+//返回多少组cell
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
 }
 
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    UserTableViewCell *cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
-    return cell;
-}
-
+//返回每组多少个cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
     return 1;
@@ -81,12 +73,85 @@
         return 1;
     }
 }
+//返回cell
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    if (indexPath.section == 0) {
+    UserTableViewCell *cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
+    return cell;
+    }
+    if (indexPath.section ==1) {
+        
+        if (indexPath.row == 0) {
+            
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            cell.textLabel.text = @"我发布的";
+            cell.detailTextLabel.text = @"0";
+            cell.imageView.image = [UIImage imageNamed:@"发布"];
+            
+            return cell;
+        } else if (indexPath.row == 1) {
+            
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            cell.textLabel.text = @"我卖出的";
+            cell.detailTextLabel.text = @"0";
+            cell.imageView.image = [UIImage imageNamed:@"卖出"];
+            
+            return cell;
+        } else if (indexPath.row ==2) {
+            
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            cell.textLabel.text = @"我买到的";
+            cell.detailTextLabel.text = @"0";
+            cell.imageView.image = [UIImage imageNamed:@"购买"];
+            
+            return cell;
+        }else if (indexPath.row == 3) {
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            cell.textLabel.text = @"我的收藏";
+            cell.detailTextLabel.text = @"0";
+            cell.imageView.image = [UIImage imageNamed:@"收藏"];
+            
+            return cell;
+        } else {
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            cell.textLabel.text = @"我的社区";
+            cell.detailTextLabel.text = @"";
+            cell.imageView.image = [UIImage imageNamed:@"互动社区"];
+            
+            return cell;
+        }
+        
+    }
+    else {
+        
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        cell.textLabel.text = @"设置";
+        cell.detailTextLabel.text = @"";
+        cell.imageView.image = [UIImage imageNamed:@"设置"];
+        return cell;
+    }
+}
+
+//设置每组cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
         return 90;
     } else {
-        return 40;
+        return 50;
     }
 }
 
@@ -95,13 +160,36 @@
     return 15;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
+}
+
+//选择cell后的代理方法
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
+        self.hidesBottomBarWhenPushed = YES;
         UserInfoViewController *UserVC = [[UserInfoViewController alloc] init];
         [self.navigationController pushViewController:UserVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
     }
     
+    if (indexPath.section == 2) {
+        
+        self.hidesBottomBarWhenPushed = YES;
+        UserSetViewController *UserSetVC = [[UserSetViewController alloc] init];
+        [self.navigationController pushViewController:UserSetVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+        
+    }
+    
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
+
+
+
+
 @end
