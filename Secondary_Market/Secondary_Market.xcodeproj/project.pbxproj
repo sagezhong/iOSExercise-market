@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		0C1F449A20B2EB4B00D177A5 /* RegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F449920B2EB4B00D177A5 /* RegisterView.m */; };
 		0C1F44A020B2EDC600D177A5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F449F20B2EDC600D177A5 /* RegisterViewController.m */; };
+		0C67CAC220B6D21E00B1CCC4 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CAC120B6D21E00B1CCC4 /* TextFieldCell.m */; };
+		0C67CAC720B6DE0100B1CCC4 /* SetSexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CAC620B6DE0100B1CCC4 /* SetSexViewController.m */; };
+		0C67CACB20B6E3FE00B1CCC4 /* SetDepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CACA20B6E3FE00B1CCC4 /* SetDepViewController.m */; };
+		0C67CACF20B6E73900B1CCC4 /* SetPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CACE20B6E73900B1CCC4 /* SetPhoneViewController.m */; };
 		0C6A867120B585AB00C8D350 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A867020B585AB00C8D350 /* UserTableViewCell.m */; };
 		0C6A867520B59DA800C8D350 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A867420B59DA800C8D350 /* UserInfoViewController.m */; };
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
@@ -60,6 +64,14 @@
 		0C1F449920B2EB4B00D177A5 /* RegisterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterView.m; sourceTree = "<group>"; };
 		0C1F449E20B2EDC600D177A5 /* RegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		0C1F449F20B2EDC600D177A5 /* RegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		0C67CAC020B6D21E00B1CCC4 /* TextFieldCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextFieldCell.h; sourceTree = "<group>"; };
+		0C67CAC120B6D21E00B1CCC4 /* TextFieldCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextFieldCell.m; sourceTree = "<group>"; };
+		0C67CAC520B6DE0100B1CCC4 /* SetSexViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetSexViewController.h; sourceTree = "<group>"; };
+		0C67CAC620B6DE0100B1CCC4 /* SetSexViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetSexViewController.m; sourceTree = "<group>"; };
+		0C67CAC920B6E3FE00B1CCC4 /* SetDepViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetDepViewController.h; sourceTree = "<group>"; };
+		0C67CACA20B6E3FE00B1CCC4 /* SetDepViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetDepViewController.m; sourceTree = "<group>"; };
+		0C67CACD20B6E73900B1CCC4 /* SetPhoneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetPhoneViewController.h; sourceTree = "<group>"; };
+		0C67CACE20B6E73900B1CCC4 /* SetPhoneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetPhoneViewController.m; sourceTree = "<group>"; };
 		0C6A866F20B585AB00C8D350 /* UserTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
 		0C6A867020B585AB00C8D350 /* UserTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
 		0C6A867320B59DA800C8D350 /* UserInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
@@ -170,6 +182,42 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		0C67CABE20B6D1E600B1CCC4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0C67CAC020B6D21E00B1CCC4 /* TextFieldCell.h */,
+				0C67CAC120B6D21E00B1CCC4 /* TextFieldCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0C67CAC320B6DDB500B1CCC4 /* SetSex */ = {
+			isa = PBXGroup;
+			children = (
+				0C67CAC520B6DE0100B1CCC4 /* SetSexViewController.h */,
+				0C67CAC620B6DE0100B1CCC4 /* SetSexViewController.m */,
+			);
+			path = SetSex;
+			sourceTree = "<group>";
+		};
+		0C67CAC820B6E31600B1CCC4 /* SetDep */ = {
+			isa = PBXGroup;
+			children = (
+				0C67CAC920B6E3FE00B1CCC4 /* SetDepViewController.h */,
+				0C67CACA20B6E3FE00B1CCC4 /* SetDepViewController.m */,
+			);
+			path = SetDep;
+			sourceTree = "<group>";
+		};
+		0C67CACC20B6E72500B1CCC4 /* SetPhone */ = {
+			isa = PBXGroup;
+			children = (
+				0C67CACD20B6E73900B1CCC4 /* SetPhoneViewController.h */,
+				0C67CACE20B6E73900B1CCC4 /* SetPhoneViewController.m */,
+			);
+			path = SetPhone;
+			sourceTree = "<group>";
+		};
 		0C6A866E20B5858600C8D350 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +292,9 @@
 		8338D19720B6B015008B9343 /* ChildVIew */ = {
 			isa = PBXGroup;
 			children = (
+				0C67CACC20B6E72500B1CCC4 /* SetPhone */,
+				0C67CAC820B6E31600B1CCC4 /* SetDep */,
+				0C67CAC320B6DDB500B1CCC4 /* SetSex */,
 				8338D19820B6B02F008B9343 /* SetName */,
 			);
 			path = ChildVIew;
@@ -252,6 +303,7 @@
 		8338D19820B6B02F008B9343 /* SetName */ = {
 			isa = PBXGroup;
 			children = (
+				0C67CABE20B6D1E600B1CCC4 /* View */,
 				8338D19920B6B0A7008B9343 /* SetNameViewController.h */,
 				8338D19A20B6B0A7008B9343 /* SetNameViewController.m */,
 			);
@@ -657,12 +709,16 @@
 				831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */,
 				83F67C1320B04F4200B9292F /* ViewController.m in Sources */,
 				8338D19B20B6B0A7008B9343 /* SetNameViewController.m in Sources */,
+				0C67CAC220B6D21E00B1CCC4 /* TextFieldCell.m in Sources */,
 				0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */,
+				0C67CACB20B6E3FE00B1CCC4 /* SetDepViewController.m in Sources */,
 				83F67C6620B0669500B9292F /* MessageViewController.m in Sources */,
+				0C67CAC720B6DE0100B1CCC4 /* SetSexViewController.m in Sources */,
 				83F67C7D20B1000200B9292F /* MCTabBar.m in Sources */,
 				0C6A867520B59DA800C8D350 /* UserInfoViewController.m in Sources */,
 				8338D19620B65214008B9343 /* UserSetViewController.m in Sources */,
 				0C1F449A20B2EB4B00D177A5 /* RegisterView.m in Sources */,
+				0C67CACF20B6E73900B1CCC4 /* SetPhoneViewController.m in Sources */,
 				0C782A2820B18F1400B5C834 /* LoginView.m in Sources */,
 				83F67C6020B065E500B9292F /* FirstViewController.m in Sources */,
 				83F67C8020B1138D00B9292F /* LoginViewController.m in Sources */,

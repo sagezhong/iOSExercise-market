@@ -1,31 +1,31 @@
 //
-//  SetNameViewController.m
+//  SetPhoneViewController.m
 //  Secondary_Market
 //
-//  Created by 史莱斯 on 24/5/18.
+//  Created by Maktub on 24/5/18.
 //  Copyright © 2018年 sagezhong. All rights reserved.
 //
 
-#import "SetNameViewController.h"
+#import "SetPhoneViewController.h"
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 #import "TextFieldCell.h"
 
-@interface SetNameViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface SetPhoneViewController () <UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITextField *userName;
+
 
 @property (nonatomic, strong) TextFieldCell *cell;
 
 @end
 
-@implementation SetNameViewController
+@implementation SetPhoneViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"设置名字";
+    self.title = @"设置手机号";
     self.view.backgroundColor = [UIColor whiteColor];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
@@ -44,17 +44,12 @@
 }
 - (void)click {
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *userName = [self.cell.setField text];
-    NSString *name = [userDefaults objectForKey:@"name"];
-    if ([userName isEqual:name]) {
-        [SVProgressHUD showInfoWithStatus:@"请修改后再完成"];
-        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-        });
-    }else if ([userName isEqual:@""]) {
-        [SVProgressHUD showInfoWithStatus:@"用户名不能为空"];
+  
+    NSString *userPhone = [self.cell.setField text];
+    if ([userPhone isEqual:@""]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if (userPhone.length !=11) {
+        [SVProgressHUD showInfoWithStatus:@"请输入手机号码"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
@@ -78,7 +73,7 @@
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/plain", nil];
         
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"id",userName,@"name", nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"id",userName,@"phone", nil];
         [manager GET:@"http://119.23.230.116/xianyu/register/" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [SVProgressHUD showInfoWithStatus:@"修改成功"];
             [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
@@ -91,7 +86,7 @@
             NSLog(@"%@",dic);
             
             
-            [userDefaults setObject:userName forKey:@"name"];
+            [userDefaults setObject:userName forKey:@"phone"];
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [SVProgressHUD showInfoWithStatus:@"连接服务器失败"];
@@ -111,14 +106,14 @@
     
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -134,7 +129,8 @@
 {
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
     self.cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
-    self.cell.setField.text = [userDefaults objectForKey:@"name"];
+    self.cell.setField.text = [userDefaults objectForKey:@"phone"];
+    self.cell.setField.keyboardType = UIKeyboardTypeNumberPad;
     
     
     return self.cell;
@@ -148,3 +144,4 @@
 
 
 @end
+

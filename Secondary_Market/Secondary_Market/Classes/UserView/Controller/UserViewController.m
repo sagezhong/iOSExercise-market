@@ -14,7 +14,7 @@
 
 @interface UserViewController () <UITableViewDelegate,UITableViewDataSource>
 
-
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -25,11 +25,11 @@
     // Do any additional setup after loading the view.
     
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    tableView.delegate = self;
-    tableView.dataSource = self;
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     
-    [self.view addSubview:tableView];
+    [self.view addSubview:self.tableView];
     
     self.title = @"我";
 /*    UIButton *quiteBtn = [[UIButton alloc] init];
@@ -49,6 +49,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+//刷新tableView
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
 }
 
 

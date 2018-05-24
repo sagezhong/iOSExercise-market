@@ -8,8 +8,13 @@
 
 #import "UserInfoViewController.h"
 #import "SetNameViewController.h"
+#import "SetSexViewController.h"
+#import "SetDepViewController.h"
+#import "SetPhoneViewController.h"
 
 @interface UserInfoViewController () <UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
 
 
 
@@ -26,15 +31,17 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     
-    tableView.delegate = self;
+    self.tableView.delegate = self;
     
-    tableView.dataSource = self;
-    [self.view addSubview:tableView];
-    
-    
-    
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -140,25 +147,27 @@
 {
     if (indexPath.row ==0 ) {
         SetNameViewController *vc = [[SetNameViewController alloc] init];
-        [self presentViewController:vc animated:YES completion:nil];
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    } else if (indexPath.row ==2 ) {
+        SetSexViewController *vc = [[SetSexViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.row == 3) {
+        SetDepViewController *vc = [[SetDepViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.row == 4 ) {
+        
+        SetPhoneViewController *vc = [[SetPhoneViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+
 
 
 

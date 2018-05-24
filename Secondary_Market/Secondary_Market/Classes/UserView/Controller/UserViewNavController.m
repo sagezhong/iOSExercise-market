@@ -25,7 +25,7 @@
        
        NSForegroundColorAttributeName:[UIColor whiteColor]}];
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-  
+   
     
 }
 
