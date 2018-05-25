@@ -47,7 +47,7 @@
 }
 - (void)click {
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
     NSString *userSex = [self.cell.setField text];
 
     if (userSex.length > 3) {

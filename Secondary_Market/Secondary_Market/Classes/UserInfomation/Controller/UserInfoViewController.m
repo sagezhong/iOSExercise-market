@@ -145,20 +145,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.hidesBottomBarWhenPushed = YES;
     if (indexPath.row ==0 ) {
         SetNameViewController *vc = [[SetNameViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+        self.hidesBottomBarWhenPushed = YES;
         
     } else if (indexPath.row ==2 ) {
         SetSexViewController *vc = [[SetSexViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+        self.hidesBottomBarWhenPushed = YES;
     } else if (indexPath.row == 3) {
         SetDepViewController *vc = [[SetDepViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+        self.hidesBottomBarWhenPushed = YES;
     } else if (indexPath.row == 4 ) {
         
         SetPhoneViewController *vc = [[SetPhoneViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+        
+        self.hidesBottomBarWhenPushed = YES;
         
     }
     

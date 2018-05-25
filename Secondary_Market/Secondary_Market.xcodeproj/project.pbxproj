@@ -13,6 +13,7 @@
 		0C67CAC720B6DE0100B1CCC4 /* SetSexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CAC620B6DE0100B1CCC4 /* SetSexViewController.m */; };
 		0C67CACB20B6E3FE00B1CCC4 /* SetDepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CACA20B6E3FE00B1CCC4 /* SetDepViewController.m */; };
 		0C67CACF20B6E73900B1CCC4 /* SetPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CACE20B6E73900B1CCC4 /* SetPhoneViewController.m */; };
+		0C67CAD320B8306000B1CCC4 /* AddGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CAD220B8306000B1CCC4 /* AddGoodsViewController.m */; };
 		0C6A867120B585AB00C8D350 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A867020B585AB00C8D350 /* UserTableViewCell.m */; };
 		0C6A867520B59DA800C8D350 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A867420B59DA800C8D350 /* UserInfoViewController.m */; };
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
@@ -72,6 +73,8 @@
 		0C67CACA20B6E3FE00B1CCC4 /* SetDepViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetDepViewController.m; sourceTree = "<group>"; };
 		0C67CACD20B6E73900B1CCC4 /* SetPhoneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetPhoneViewController.h; sourceTree = "<group>"; };
 		0C67CACE20B6E73900B1CCC4 /* SetPhoneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetPhoneViewController.m; sourceTree = "<group>"; };
+		0C67CAD120B8306000B1CCC4 /* AddGoodsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddGoodsViewController.h; sourceTree = "<group>"; };
+		0C67CAD220B8306000B1CCC4 /* AddGoodsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddGoodsViewController.m; sourceTree = "<group>"; };
 		0C6A866F20B585AB00C8D350 /* UserTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
 		0C6A867020B585AB00C8D350 /* UserTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
 		0C6A867320B59DA800C8D350 /* UserInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
@@ -216,6 +219,15 @@
 				0C67CACE20B6E73900B1CCC4 /* SetPhoneViewController.m */,
 			);
 			path = SetPhone;
+			sourceTree = "<group>";
+		};
+		0C67CAD020B8293F00B1CCC4 /* NewGoods */ = {
+			isa = PBXGroup;
+			children = (
+				0C67CAD120B8306000B1CCC4 /* AddGoodsViewController.h */,
+				0C67CAD220B8306000B1CCC4 /* AddGoodsViewController.m */,
+			);
+			path = NewGoods;
 			sourceTree = "<group>";
 		};
 		0C6A866E20B5858600C8D350 /* View */ = {
@@ -372,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				83F67C4120B0516200B9292F /* RootView */,
+				0C67CAD020B8293F00B1CCC4 /* NewGoods */,
 				83F67C4220B0519400B9292F /* FirstView */,
 				83F67C4320B051A500B9292F /* CommunityView */,
 				83F67C4420B051ED00B9292F /* MessageView */,
@@ -544,6 +557,7 @@
 				83F67C0820B04F4200B9292F /* Frameworks */,
 				83F67C0920B04F4200B9292F /* Resources */,
 				C40F3616E35C0FCBD76AB48B /* [CP] Copy Pods Resources */,
+				D12FE3AD1165EA4BCBBB778D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -688,15 +702,36 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Secondary_Market/Pods-Secondary_Market-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/PYPhotoBrowser/PYPhotoBrowser/PYPhotosView.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PYPhotosView.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TZImagePickerController.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Secondary_Market/Pods-Secondary_Market-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D12FE3AD1165EA4BCBBB778D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Secondary_Market/Pods-Secondary_Market-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -729,6 +764,7 @@
 				83F67C1E20B04F4200B9292F /* main.m in Sources */,
 				83F67C4B20B0534A00B9292F /* RootViewController.m in Sources */,
 				83F67C5C20B057B100B9292F /* UserViewNavController.m in Sources */,
+				0C67CAD320B8306000B1CCC4 /* AddGoodsViewController.m in Sources */,
 				0C1F44A020B2EDC600D177A5 /* RegisterViewController.m in Sources */,
 				83F67C6920B066AA00B9292F /* UserViewController.m in Sources */,
 				83F67C5720B055F200B9292F /* MessageViewNavController.m in Sources */,

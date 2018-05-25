@@ -11,6 +11,7 @@
 #import "CommunityViewNavController.h"
 #import "MessageViewNavController.h"
 #import "UserViewNavController.h"
+#import "AddGoodsViewController.h"
 
 
 
@@ -99,7 +100,13 @@
 }
 
 - (void)buttonAction
+
 {
+    self.hidesBottomBarWhenPushed = YES;
+    
+    AddGoodsViewController *vc = [[AddGoodsViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
+    
     NSLog(@"点击");
     
 }

@@ -8,5 +8,9 @@ target 'Secondary_Market' do
   # Pods for Secondary_Market
 pod 'AFNetworking'
 pod 'SVProgressHUD'
+pod 'SDWebImage'
+pod 'MJRefresh'
+pod 'TZImagePickerController'
+pod 'PYPhotoBrowser'
 
 end
