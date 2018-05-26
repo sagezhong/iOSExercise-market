@@ -71,7 +71,7 @@
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/plain", nil];
         
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"id",userName,@"department", nil];
-        [manager GET:@"http://119.23.230.116/xianyu/register/" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [manager GET:@"http://119.23.230.116/xianyu/updateUserById/" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [SVProgressHUD showInfoWithStatus:@"修改成功"];
             [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

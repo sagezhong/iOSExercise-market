@@ -23,11 +23,15 @@
 
 @property (nonatomic, strong) UITextField *goodsInfo;
 
+@property (nonatomic, strong) UITextField *goodsPrice;
+
 @property (nonatomic, strong) UIView *photoBackgroundView;
 
 @property (nonatomic, strong) PYPhotosView *publishPhotosView;
 
 @property (nonatomic, strong) NSMutableArray *imagesM;
+
+@property (nonatomic, strong) UIView *Bgview;
 
 @end
 
@@ -87,7 +91,7 @@
     
     
     //商品标题 图片 详情的背景
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 74, self.view.bounds.size.width, 380)];
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 74, self.view.bounds.size.width, 450)];
     bgView.backgroundColor = [UIColor whiteColor];
     // 商品标题
     self.goodsName = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, self.view.bounds.size.width-20, 30)];
@@ -125,8 +129,8 @@
     PYPhotosView *publishPhotosView = [PYPhotosView photosView];
     publishPhotosView.py_x = 0;
     publishPhotosView.py_y = 0;
-    publishPhotosView.photoWidth = 110;
-    publishPhotosView.photoHeight = 110;
+    publishPhotosView.photoWidth = 105;
+    publishPhotosView.photoHeight = 105;
     publishPhotosView.photoMargin = 20;
     publishPhotosView.photosMaxCol = 3;
     publishPhotosView.imagesMaxCountWhenWillCompose = 3;
@@ -135,10 +139,27 @@
     [_photoBackgroundView addSubview:publishPhotosView];
     self.publishPhotosView = publishPhotosView;
     
+    //价格输入框背景
+   // UIView *bgView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 400, self.view.bounds.size.width, 100)];
+    // bgView2.backgroundColor = [UIColor whiteColor];
     
+    //价格label
+    UIView *lineView3 = [[UIView alloc] initWithFrame:CGRectMake(20, 390, bgView.bounds.size.width-40, 1)];
+    lineView3.backgroundColor = myGraycolor;
+    [bgView addSubview:lineView3];
     
+    self.goodsPrice = [[UITextField alloc] initWithFrame: CGRectMake(20, 410, bgView.bounds.size.width-20, 30)];
+    self.goodsPrice.placeholder = @"请输入商品价格";
+    self.goodsPrice.font = [UIFont systemFontOfSize:15];
+    self.goodsPrice.keyboardType = UIKeyboardTypeNumberPad;
+    self.goodsPrice.tag = 1;
+    self.goodsPrice.delegate = self;
     
-    [self.view addSubview:bgView];
+    [bgView addSubview:self.goodsPrice];
+    
+  //  [self.view addSubview:bgView2];
+    self.Bgview = bgView;
+    [self.view addSubview:self.Bgview];
     
 }
 
@@ -153,9 +174,72 @@
 
 //确认下单
 - (void)createOrder {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
-}
+    NSString *user_id =[userdefaults objectForKey:@"id"];
+    NSString *goodsName = [self.goodsName text];
+    NSString *goodsInfo = [self.goodsInfo text];
+    NSString *goodsPrice = [self.goodsPrice text];
+    
+  //  NSDictionary *dit = [NSDictionary dictionaryWithObjectsAndKeys:user_id,@"userId",goodsName,@"name",goodsInfo,"info",goodsPrice,"price",@"1",@"status", nil];
+    
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.requestSerializer.timeoutInterval = 10.0f;
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"multipart/form-data", @"application/json", @"text/html", @"image/jpeg", @"image/png", @"application/octet-stream", @"text/json", nil];
+    
+    
+    
+   
+    [manager POST:@"http://119.23.230.116/xianyu/upLoadGoods"parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSLog(@"有在上传吗");
+        NSLog(@"打印照片数组%@",self.imagesM);
+        for (int i = 0; i < self.imagesM.count; i++) {
+            
+            UIImage *image = self.imagesM[i];
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+            
+            // 在网络开发中，上传文件时，是文件不允许被覆盖，文件重名
+            // 要解决此问题，
+            // 可以在上传时使用当前的系统事件作为文件名
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            // 设置时间格式
+            [formatter setDateFormat:@"yyyyMMddHHmmss"];
+            NSString *dateString = [formatter stringFromDate:[NSDate date]];
+            NSString *fileName = [NSString  stringWithFormat:@"%@%d.jpg", dateString,i];
+            NSLog(@"%@",fileName);
+            
+            /*此方法参数
+             1. 要上传的[二进制数据]
+             2. 对应网站上[upload.php中]处理文件的[字段"file"]
+             3. 要保存在服务器上的[文件名]
+             4. 上传文件的[mimeType]
+             */
+            [formData appendPartWithFileData:imageData name:@"upload" fileName:fileName mimeType:@"image/jpeg"]; //  /jpg/png
+        }
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        [SVProgressHUD showWithStatus:@"发布中..."];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"成功");
+        [SVProgressHUD showSuccessWithStatus:@"发布成功！"];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+          [SVProgressHUD dismiss];
+        });
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"失败");
+        [SVProgressHUD showErrorWithStatus:@"无法连接到服务器"];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    }];
+}
 
 /*
 #pragma mark - Navigation
@@ -166,6 +250,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
  //   textField = self.goodsTitle;
@@ -173,6 +258,32 @@
     [self.goodsName resignFirstResponder];
     return YES;
 }
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField{   //开始编辑时，整体上移
+
+    if ([textField isEqual:self.goodsPrice])
+    {
+        [self moveView:-216];
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField{     //结束编辑时，整体下移
+   
+    if ([textField isEqual:self.goodsPrice])
+    {
+        [self moveView:216];
+    }
+}
+-(void)moveView:(float)move{
+    NSTimeInterval animationDuration = 0.5f;
+    CGRect frame = self.view.frame;
+    frame.origin.y +=move;//view的X轴上移
+  //  self.view.frame = frame;
+    [UIView beginAnimations:@"ResizeView" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    self.view.frame = frame;
+    [UIView commitAnimations];//设置调整界面的动画效果
+}
+
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
@@ -199,6 +310,5 @@
 {
     
 }
-
 
 @end

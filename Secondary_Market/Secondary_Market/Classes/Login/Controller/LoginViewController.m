@@ -101,7 +101,7 @@
            // NSLog(@"结果%@",responseObject);
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-           //  NSLog(@"返回结果: %@",dict);
+             NSLog(@"返回结果: %@",dict);
             
             NSString *LoginResult = [dict objectForKey:@"data"];
             NSDictionary *userdict = [dict objectForKey:@"user"];
