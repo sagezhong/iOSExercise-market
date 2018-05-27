@@ -42,6 +42,7 @@
     nav3.title = @"消息";
     nav4.title = @"我";
     
+ 
    
     [self addChildViewController:nav1];
     [self addChildViewController:nav2];

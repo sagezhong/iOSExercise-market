@@ -63,7 +63,18 @@
 
 //按下登录按钮
 - (void)Login {
-    if (_loginView.userName.text.length == 0) {
+    
+    //设置一个本地用户
+    
+    if ([[_loginView.userName text] isEqual:@"123"] && [[_loginView.password text] isEqual:@"123"] ) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:[_loginView.userName text] forKey:@"id"];
+        [userDefaults setObject:[_loginView.password text] forKey:@"password"];
+        [userDefaults setBool:YES forKey:@"haveLogin"];
+        RootViewController *vc = [[RootViewController alloc] init];
+        [self presentViewController:vc animated:YES completion:nil];
+        
+    }else if (_loginView.userName.text.length == 0) {
         [SVProgressHUD showInfoWithStatus:@"请输入你的用户名"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

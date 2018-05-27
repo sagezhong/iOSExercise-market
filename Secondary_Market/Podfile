@@ -12,5 +12,6 @@ pod 'SDWebImage'
 pod 'MJRefresh'
 pod 'TZImagePickerController'
 pod 'PYPhotoBrowser'
+pod 'SDCycleScrollView','~> 1.75'
 
 end

@@ -33,6 +33,8 @@
 
 @property (nonatomic, strong) UIView *Bgview;
 
+@property (nonatomic, strong) UINavigationBar *myBar;
+
 @end
 
 @implementation AddGoodsViewController
@@ -57,11 +59,23 @@
     UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navBar.barTintColor = [UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1];
     //自定义导航栏的title，用UILabel实现
+    
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
     titleLabel.text = @"发布商品";
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.font = [UIFont systemFontOfSize:18];
-    //自定义导航栏组件
+   
+     //自定义导航栏组件
+    //创建搜索框
+    /*
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 250, 44)];
+    searchBar.placeholder = @"搜索商品";
+    
+    searchBar.showsCancelButton = YES;
+    
+    searchBar.tintColor = [UIColor clearColor];
+    */
+    
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
     //设置title
     navItem.titleView = titleLabel;
@@ -73,25 +87,14 @@
     [navItem setLeftBarButtonItem:leftButton];
     
     [navBar pushNavigationItem:navItem animated:NO];
-    [self.view addSubview:navBar];
+    self.myBar = navBar;
+    [self.view addSubview:self.myBar];
     
-    //确认下单按钮
-    UIView *createView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-60, self.view.bounds.size.width, 60)];
-    createView.backgroundColor = [UIColor whiteColor];
-    
-    UIButton *createBtn = [[UIButton alloc] initWithFrame:CGRectMake(75/2, 10, 300, 40)];
-    createBtn.layer.cornerRadius =5;
-    [createBtn setTitle:@"确认发布" forState:UIControlStateNormal];
-    [createBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [createBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    createBtn.backgroundColor = [UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1];
-    [createBtn addTarget:self action:@selector(createOrder) forControlEvents:UIControlEventTouchUpInside];
-    [createView addSubview:createBtn];
-    [self.view addSubview:createView];
+
     
     
     //商品标题 图片 详情的背景
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 74, self.view.bounds.size.width, 450)];
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 84, self.view.bounds.size.width, self.view.bounds.size.height-74)];
     bgView.backgroundColor = [UIColor whiteColor];
     // 商品标题
     self.goodsName = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, self.view.bounds.size.width-20, 30)];
@@ -121,7 +124,7 @@
     [bgView addSubview:lineView2];
     //图片
     _photoBackgroundView = [[UIView alloc] init];
-    _photoBackgroundView.frame = CGRectMake(15, 265, bgView.bounds.size.width, bgView.bounds.size.width);
+    _photoBackgroundView.frame = CGRectMake(20, 265, bgView.bounds.size.width, bgView.bounds.size.width);
     
     [bgView addSubview:_photoBackgroundView];
     
@@ -129,9 +132,9 @@
     PYPhotosView *publishPhotosView = [PYPhotosView photosView];
     publishPhotosView.py_x = 0;
     publishPhotosView.py_y = 0;
-    publishPhotosView.photoWidth = 105;
-    publishPhotosView.photoHeight = 105;
-    publishPhotosView.photoMargin = 20;
+    publishPhotosView.photoWidth = 100;
+    publishPhotosView.photoHeight = 100;
+    publishPhotosView.photoMargin = 25;
     publishPhotosView.photosMaxCol = 3;
     publishPhotosView.imagesMaxCountWhenWillCompose = 3;
     publishPhotosView.images = self.imagesM;
@@ -143,7 +146,7 @@
    // UIView *bgView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 400, self.view.bounds.size.width, 100)];
     // bgView2.backgroundColor = [UIColor whiteColor];
     
-    //价格label
+
     UIView *lineView3 = [[UIView alloc] initWithFrame:CGRectMake(20, 390, bgView.bounds.size.width-40, 1)];
     lineView3.backgroundColor = myGraycolor;
     [bgView addSubview:lineView3];
@@ -154,8 +157,26 @@
     self.goodsPrice.keyboardType = UIKeyboardTypeNumberPad;
     self.goodsPrice.tag = 1;
     self.goodsPrice.delegate = self;
-    
     [bgView addSubview:self.goodsPrice];
+    
+    //中间的灰色区域
+    UIView *bgview3 = [[UIView alloc] initWithFrame:CGRectMake(0, 455, bgView.bounds.size.width, 75)];
+    bgview3.backgroundColor = myGraycolor;
+    [bgView addSubview:bgview3];
+    
+    //确认下单按钮
+    UIView *createView = [[UIView alloc] initWithFrame:CGRectMake(0,bgView.bounds.size.height-70, self.view.bounds.size.width, 60)];
+    createView.backgroundColor = [UIColor whiteColor];
+    
+    UIButton *createBtn = [[UIButton alloc] initWithFrame:CGRectMake(75/2, 10, 300, 40)];
+    createBtn.layer.cornerRadius =5;
+    [createBtn setTitle:@"确认发布" forState:UIControlStateNormal];
+    [createBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [createBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    createBtn.backgroundColor = [UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1];
+    [createBtn addTarget:self action:@selector(createOrder) forControlEvents:UIControlEventTouchUpInside];
+    [createView addSubview:createBtn];
+    [bgView addSubview:createView];
     
   //  [self.view addSubview:bgView2];
     self.Bgview = bgView;
@@ -264,6 +285,13 @@
     if ([textField isEqual:self.goodsPrice])
     {
         [self moveView:-216];
+        
+    }
+    if ([textField isEqual:self.goodsInfo]) {
+        [self moveView:-20];
+    }
+    if ([textField isEqual:self.goodsName]) {
+        [self moveView:-20];
     }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField{     //结束编辑时，整体下移
@@ -272,15 +300,23 @@
     {
         [self moveView:216];
     }
+    if ([textField isEqual:self.goodsInfo]) {
+        [self moveView:20];
+    }
+    if ([textField isEqual:self.goodsName]) {
+        [self moveView:20];
+    }
 }
 -(void)moveView:(float)move{
     NSTimeInterval animationDuration = 0.5f;
-    CGRect frame = self.view.frame;
+    CGRect frame = self.Bgview.frame;
     frame.origin.y +=move;//view的X轴上移
+   
   //  self.view.frame = frame;
     [UIView beginAnimations:@"ResizeView" context:nil];
     [UIView setAnimationDuration:animationDuration];
-    self.view.frame = frame;
+    [self.view addSubview:self.myBar];
+    self.Bgview.frame = frame;
     [UIView commitAnimations];//设置调整界面的动画效果
 }
 
@@ -298,6 +334,7 @@
         for (int i = 0; i < photos.count; i++) {
             [self.imagesM addObject:photos[i]];
         }
+        
         //刷新
         
         [photosView reloadDataWithImages:self.imagesM];
