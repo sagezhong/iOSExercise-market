@@ -27,11 +27,6 @@
     
     self.navigationBar.hidden = YES;
     
-
-    
-    
-    
-    
 }
 
 

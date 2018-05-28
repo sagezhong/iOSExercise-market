@@ -6,12 +6,12 @@ target 'Secondary_Market' do
   # use_frameworks!
 
   # Pods for Secondary_Market
-pod 'AFNetworking'
-pod 'SVProgressHUD'
-pod 'SDWebImage'
-pod 'MJRefresh'
-pod 'TZImagePickerController'
-pod 'PYPhotoBrowser'
-pod 'SDCycleScrollView','~> 1.75'
+  pod 'AFNetworking'
+  pod 'SVProgressHUD'
+  pod 'MJRefresh'
+  pod 'TZImagePickerController'
+  pod 'PYPhotoBrowser'
+  pod 'SDCycleScrollView'
+  pod 'SDWebImage', '~> 4.2.1'
 
 end

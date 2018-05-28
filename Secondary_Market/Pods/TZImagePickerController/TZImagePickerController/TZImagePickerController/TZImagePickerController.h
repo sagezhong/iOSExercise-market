@@ -4,7 +4,8 @@
 //
 //  Created by 谭真 on 15/12/24.
 //  Copyright © 2015年 谭真. All rights reserved.
-//  version 1.8.0 - 2017.06.03
+//  version 2.1.0.2 - 2018.04.25
+//  更多信息，请前往项目的github地址：https://github.com/banchichen/TZImagePickerController
 
 /*
  经过测试，比起xib的方式，把TZAssetCell改用纯代码的方式来写，滑动帧数明显提高了（约提高10帧左右）
@@ -18,15 +19,22 @@
 #import <UIKit/UIKit.h>
 #import "TZAssetModel.h"
 #import "NSBundle+TZImagePicker.h"
+#import "TZImageManager.h"
+#import "TZVideoPlayerController.h"
+#import "TZGifPhotoPreviewController.h"
+#import "TZLocationManager.h"
+#import "TZPhotoPreviewController.h"
 
 #define iOS7Later ([UIDevice currentDevice].systemVersion.floatValue >= 7.0f)
 #define iOS8Later ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
 #define iOS9Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
 #define iOS9_1Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.1f)
+#define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 
 @protocol TZImagePickerControllerDelegate;
 @interface TZImagePickerController : UINavigationController
 
+#pragma mark -
 /// Use this init method / 用这个初始化方法
 - (instancetype)initWithMaxImagesCount:(NSInteger)maxImagesCount delegate:(id<TZImagePickerControllerDelegate>)delegate;
 - (instancetype)initWithMaxImagesCount:(NSInteger)maxImagesCount columnNumber:(NSInteger)columnNumber delegate:(id<TZImagePickerControllerDelegate>)delegate;
@@ -36,6 +44,7 @@
 /// This init method for crop photo / 用这个初始化方法以裁剪图片
 - (instancetype)initCropTypeWithAsset:(id)asset photo:(UIImage *)photo completion:(void (^)(UIImage *cropImage,id asset))completion;
 
+#pragma mark -
 /// Default is 9 / 默认最大可选9张图片
 @property (nonatomic, assign) NSInteger maxImagesCount;
 
@@ -51,7 +60,7 @@
 /// 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个
 @property (nonatomic, assign) BOOL sortAscendingByModificationDate;
 
-/// Default is 828px / 默认828像素宽
+/// The pixel width of output image, Default is 828px / 导出图片的宽度，默认828像素宽
 @property (nonatomic, assign) CGFloat photoWidth;
 
 /// Default is 600px / 默认600像素宽
@@ -68,6 +77,8 @@
 /// Default is YES, if set NO, user can't picking video.
 /// 默认为YES，如果设置为NO,用户将不能选择视频
 @property (nonatomic, assign) BOOL allowPickingVideo;
+/// Default is NO / 默认为NO，为YES时可以多选视频/gif图片，和照片共享最大可选张数maxImagesCount的限制
+@property (nonatomic, assign) BOOL allowPickingMultipleVideo;
 
 /// Default is NO, if set YES, user can picking gif image.
 /// 默认为NO，如果设置为YES,用户可以选择gif图片
@@ -78,8 +89,22 @@
 @property(nonatomic, assign) BOOL allowPickingImage;
 
 /// Default is YES, if set NO, user can't take picture.
-/// 默认为YES，如果设置为NO,拍照按钮将隐藏,用户将不能选择照片
+/// 默认为YES，如果设置为NO, 用户将不能拍摄照片
 @property(nonatomic, assign) BOOL allowTakePicture;
+
+/// Default is YES, if set NO, user can't take video.
+/// 默认为YES，如果设置为NO, 用户将不能拍摄视频
+@property(nonatomic, assign) BOOL allowTakeVideo;
+/// Default value is 10 minutes / 视频最大拍摄时间，默认是10分钟，单位是秒
+@property (assign, nonatomic) NSTimeInterval videoMaximumDuration;
+
+/// 首选语言，如果设置了就用该语言，不设则取当前系统语言。
+/// 由于目前只支持中文、繁体中文、英文、越南语。故该属性只支持zh-Hans、zh-Hant、en、vi四种值，其余值无效。
+@property (copy, nonatomic) NSString *preferredLanguage;
+
+/// 语言bundle，preferredLanguage变化时languageBundle会变化
+/// 可通过手动设置bundle，让选择器支持新的的语言（需要在设置preferredLanguage后设置languageBundle）。欢迎提交PR把语言文件提交上来~
+@property (strong, nonatomic) NSBundle *languageBundle;
 
 /// Default is YES, if set NO, user can't preview photo.
 /// 默认为YES，如果设置为NO,预览按钮将隐藏,用户将不能去预览照片
@@ -88,6 +113,10 @@
 /// Default is YES, if set NO, the picker don't dismiss itself.
 /// 默认为YES，如果设置为NO, 选择器将不会自己dismiss
 @property(nonatomic, assign) BOOL autoDismiss;
+
+/// Default is YES, if set NO, in the delegate method the photos and infos will be nil, only assets hava value.
+/// 默认为NO，如果设置为YES，代理方法里photos和infos会是nil，只返回assets
+@property (assign, nonatomic) BOOL onlyReturnAsset;
 
 /// The photos user have selected
 /// 用户选中过的图片数组
@@ -101,23 +130,34 @@
 /// Hide the photo what can not be selected, Default is NO
 /// 隐藏不可以选中的图片，默认是NO，不推荐将其设置为YES
 @property (nonatomic, assign) BOOL hideWhenCanNotSelect;
-/// 顶部statusBar 是否为系统默认的黑色，默认为NO
-@property (nonatomic, assign) BOOL isStatusBarDefault;
+/// Deprecated, Use statusBarStyle (顶部statusBar 是否为系统默认的黑色，默认为NO)
+@property (nonatomic, assign) BOOL isStatusBarDefault __attribute__((deprecated("Use -statusBarStyle.")));
+/// statusBar的样式，默认为UIStatusBarStyleLightContent
+@property (assign, nonatomic) UIStatusBarStyle statusBarStyle;
+
+#pragma mark -
 /// Single selection mode, valid when maxImagesCount = 1
 /// 单选模式,maxImagesCount为1时才生效
-@property (nonatomic, assign) BOOL showSelectBtn;   ///< 在单选模式下，照片列表页中，显示选择按钮,默认为NO
-@property (nonatomic, assign) BOOL allowCrop;       ///< 允许裁剪,默认为YES，showSelectBtn为NO才生效
-@property (nonatomic, assign) CGRect cropRect;      ///< 裁剪框的尺寸
-@property (nonatomic, assign) BOOL needCircleCrop;  ///< 需要圆形裁剪框
+@property (nonatomic, assign) BOOL showSelectBtn;        ///< 在单选模式下，照片列表页中，显示选择按钮,默认为NO
+@property (nonatomic, assign) BOOL allowCrop;            ///< 允许裁剪,默认为YES，showSelectBtn为NO才生效
+@property (nonatomic, assign) CGRect cropRect;           ///< 裁剪框的尺寸
+@property (nonatomic, assign) CGRect cropRectPortrait;   ///< 裁剪框的尺寸(竖屏)
+@property (nonatomic, assign) CGRect cropRectLandscape;  ///< 裁剪框的尺寸(横屏)
+@property (nonatomic, assign) BOOL needCircleCrop;       ///< 需要圆形裁剪框
 @property (nonatomic, assign) NSInteger circleCropRadius;  ///< 圆形裁剪框半径大小
 @property (nonatomic, copy) void (^cropViewSettingBlock)(UIView *cropView);     ///< 自定义裁剪框的其他属性
 
+@property (nonatomic, copy) void (^navLeftBarButtonSettingBlock)(UIButton *leftButton);     ///< 自定义返回按钮样式及其属性
+
+#pragma mark -
 - (id)showAlertWithTitle:(NSString *)title;
 - (void)hideAlertView:(id)alertView;
 - (void)showProgressHUD;
 - (void)hideProgressHUD;
 @property (nonatomic, assign) BOOL isSelectOriginalPhoto;
+@property (assign, nonatomic) BOOL needShowStatusBar;
 
+#pragma mark -
 @property (nonatomic, copy) NSString *takePictureImageName;
 @property (nonatomic, copy) NSString *photoSelImageName;
 @property (nonatomic, copy) NSString *photoDefImageName;
@@ -126,6 +166,7 @@
 @property (nonatomic, copy) NSString *photoPreviewOriginDefImageName;
 @property (nonatomic, copy) NSString *photoNumberIconImageName;
 
+#pragma mark -
 /// Appearance / 外观颜色 + 按钮文字
 @property (nonatomic, strong) UIColor *oKButtonTitleColorNormal;
 @property (nonatomic, strong) UIColor *oKButtonTitleColorDisabled;
@@ -142,7 +183,7 @@
 @property (nonatomic, copy) NSString *settingBtnTitleStr;
 @property (nonatomic, copy) NSString *processHintStr;
 
-/// Public Method
+#pragma mark -
 - (void)cancelButtonClick;
 
 // The picker should dismiss itself; when it dismissed these handle will be called.
@@ -157,7 +198,7 @@
 // photos数组里的UIImage对象，默认是828像素宽，你可以通过设置photoWidth属性的值来改变它
 @property (nonatomic, copy) void (^didFinishPickingPhotosHandle)(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto);
 @property (nonatomic, copy) void (^didFinishPickingPhotosWithInfosHandle)(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto,NSArray<NSDictionary *> *infos);
-@property (nonatomic, copy) void (^imagePickerControllerDidCancelHandle)();
+@property (nonatomic, copy) void (^imagePickerControllerDidCancelHandle)(void);
 
 // If user picking a video, this handle will be called.
 // If system version > iOS8,asset is kind of PHAsset class, else is ALAsset class.
@@ -213,13 +254,36 @@
 
 @interface TZAlbumPickerController : UIViewController
 @property (nonatomic, assign) NSInteger columnNumber;
+@property (assign, nonatomic) BOOL isFirstAppear;
 - (void)configTableView;
 @end
 
 
 @interface UIImage (MyBundle)
-
 + (UIImage *)imageNamedFromMyBundle:(NSString *)name;
-
 @end
 
+
+@interface NSString (TzExtension)
+- (BOOL)tz_containsString:(NSString *)string;
+- (CGSize)tz_calculateSizeWithAttributes:(NSDictionary *)attributes maxSize:(CGSize)maxSize;
+@end
+
+
+@interface TZCommonTools : NSObject
++ (BOOL)tz_isIPhoneX;
++ (CGFloat)tz_statusBarHeight;
+// 获得Info.plist数据字典
++ (NSDictionary *)tz_getInfoDictionary;
+@end
+
+
+@interface TZImagePickerConfig : NSObject
++ (instancetype)sharedInstance;
+@property (copy, nonatomic) NSString *preferredLanguage;
+@property(nonatomic, assign) BOOL allowPickingImage;
+@property (nonatomic, assign) BOOL allowPickingVideo;
+@property (strong, nonatomic) NSBundle *languageBundle;
+/// 默认是200，如果一个GIF过大，里面图片个数可能超过1000，会导致内存飙升而崩溃
+@property (assign, nonatomic) NSInteger gifPreviewMaxImagesCount;
+@end

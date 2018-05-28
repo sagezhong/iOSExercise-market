@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "SDCycleScrollView.h"
 
 @interface FirstViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -16,9 +17,15 @@
 
 @property (nonatomic, strong) UISearchBar *mySearchBar;
 
+@property (nonatomic, strong) NSArray *imageM;
+
 @end
 
 @implementation FirstViewController
+
+//图片数组懒加载
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,6 +67,22 @@
 */
     [navBar pushNavigationItem:navItem animated:NO];
     self.myBar = navBar;
+    
+    //创建图片轮播器
+    UIImage *image1 =[UIImage imageNamed:@"1"];
+    UIImage *image2 = [UIImage imageNamed:@"2"];
+    UIImage *image3 = [UIImage imageNamed:@"3"];
+    UIImage *image4 = [UIImage imageNamed:@"4"];
+    UIImage *image5 = [UIImage imageNamed:@"5"];
+    
+    self.imageM = [NSArray arrayWithObjects:image1,image2,image3,image4,image5, nil];
+    
+    
+    SDCycleScrollView *imageScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 200) imageNamesGroup:self.imageM];
+    
+    _tableView.tableHeaderView =imageScrollView;
+    
+    
 
     [self.view addSubview: _tableView];
     [self.view addSubview:self.myBar];

@@ -118,13 +118,14 @@
     else {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         cell.textLabel.text = @"注册时间";
-        NSDictionary *timedic = [userDefaults objectForKey:@"registertime"];
+      /*  NSDictionary *timedic = [userDefaults objectForKey:@"registertime"];
         NSLog(@"%@",timedic); //打印看看
         
         NSString *year = [timedic objectForKey:@"year"];
         NSString *month = [timedic objectForKey:@"month"];
         NSString *day = [timedic objectForKey:@"day"];
-        NSString *time = [NSString stringWithFormat:@"%@年%@月%@日",year,month,day];
+        */
+        NSString *time = [userDefaults objectForKey:@"registertime"];
         cell.detailTextLabel.text = time;
         
         
@@ -175,21 +176,4 @@
 
 
 
-
-
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
