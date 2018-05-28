@@ -16,7 +16,7 @@
 		0C67CAD320B8306000B1CCC4 /* AddGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C67CAD220B8306000B1CCC4 /* AddGoodsViewController.m */; };
 		0C6A867120B585AB00C8D350 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A867020B585AB00C8D350 /* UserTableViewCell.m */; };
 		0C6A867520B59DA800C8D350 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A867420B59DA800C8D350 /* UserInfoViewController.m */; };
-		0C75C40720BA901B00DD47D4 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C75C40620BA901B00DD47D4 /* HeaderView.m */; };
+		0C6BDE9E20BC2E18009E36BE /* goodsInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BDE9D20BC2E18009E36BE /* goodsInfoModel.m */; };
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
 		0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2A20B1923E00B5C834 /* LoginNavController.m */; };
 		831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 831295B120B2C0B40019F6C3 /* UserInfomation.m */; };
@@ -81,8 +81,8 @@
 		0C6A867020B585AB00C8D350 /* UserTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
 		0C6A867320B59DA800C8D350 /* UserInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		0C6A867420B59DA800C8D350 /* UserInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
-		0C75C40520BA901B00DD47D4 /* HeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
-		0C75C40620BA901B00DD47D4 /* HeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
+		0C6BDE9C20BC2E18009E36BE /* goodsInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goodsInfoModel.h; sourceTree = "<group>"; };
+		0C6BDE9D20BC2E18009E36BE /* goodsInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = goodsInfoModel.m; sourceTree = "<group>"; };
 		0C782A2620B18F1400B5C834 /* LoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		0C782A2720B18F1400B5C834 /* LoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		0C782A2920B1923E00B5C834 /* LoginNavController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNavController.h; sourceTree = "<group>"; };
@@ -263,11 +263,18 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		0C6BDE9F20BC2E20009E36BE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0C6BDE9C20BC2E18009E36BE /* goodsInfoModel.h */,
+				0C6BDE9D20BC2E18009E36BE /* goodsInfoModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0C75C40420BA900A00DD47D4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0C75C40520BA901B00DD47D4 /* HeaderView.h */,
-				0C75C40620BA901B00DD47D4 /* HeaderView.m */,
 				837FF36320BB9FC50093E5FD /* GoodsTableViewCell.h */,
 				837FF36420BB9FC50093E5FD /* GoodsTableViewCell.m */,
 			);
@@ -427,6 +434,7 @@
 		83F67C4220B0519400B9292F /* FirstView */ = {
 			isa = PBXGroup;
 			children = (
+				0C6BDE9F20BC2E20009E36BE /* Model */,
 				0C75C40420BA900A00DD47D4 /* View */,
 				83F67C5020B054F000B9292F /* Controller */,
 			);
@@ -754,13 +762,13 @@
 				83F67C8020B1138D00B9292F /* LoginViewController.m in Sources */,
 				83F67C6320B0665F00B9292F /* CommunityViewController.m in Sources */,
 				83F67C4E20B0539300B9292F /* FirstViewNavigationController.m in Sources */,
+				0C6BDE9E20BC2E18009E36BE /* goodsInfoModel.m in Sources */,
 				83F67C5420B055A600B9292F /* CommunityViewNavController.m in Sources */,
 				0C6A867120B585AB00C8D350 /* UserTableViewCell.m in Sources */,
 				83F67C1E20B04F4200B9292F /* main.m in Sources */,
 				83F67C4B20B0534A00B9292F /* RootViewController.m in Sources */,
 				83F67C5C20B057B100B9292F /* UserViewNavController.m in Sources */,
 				0C67CAD320B8306000B1CCC4 /* AddGoodsViewController.m in Sources */,
-				0C75C40720BA901B00DD47D4 /* HeaderView.m in Sources */,
 				0C1F44A020B2EDC600D177A5 /* RegisterViewController.m in Sources */,
 				83F67C6920B066AA00B9292F /* UserViewController.m in Sources */,
 				83F67C5720B055F200B9292F /* MessageViewNavController.m in Sources */,

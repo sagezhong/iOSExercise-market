@@ -202,7 +202,7 @@
     NSString *goodsInfo = [self.goodsInfo text];
     NSString *goodsPrice = [self.goodsPrice text];
     
-  //  NSDictionary *dit = [NSDictionary dictionaryWithObjectsAndKeys:user_id,@"userId",goodsName,@"name",goodsInfo,"info",goodsPrice,"price",@"1",@"status", nil];
+    NSDictionary *dit = [NSDictionary dictionaryWithObjectsAndKeys:user_id,@"userId",goodsName,@"name",goodsInfo,"info",goodsPrice,"price",@"1",@"status", nil];
     
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -215,7 +215,7 @@
     
     
    
-    [manager POST:@"http://119.23.230.116/xianyu/upLoadGoods"parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:@"http://119.23.230.116/xianyu/upLoadGoods"parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSLog(@"有在上传吗");
         NSLog(@"打印照片数组%@",self.imagesM);
         for (int i = 0; i < self.imagesM.count; i++) {
