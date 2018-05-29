@@ -35,6 +35,8 @@
 
 @property (nonatomic, strong) UINavigationBar *myBar;
 
+@property (nonatomic, strong) NSString *goodsId;
+
 @end
 
 @implementation AddGoodsViewController
@@ -201,10 +203,10 @@
     NSString *goodsName = [self.goodsName text];
     NSString *goodsInfo = [self.goodsInfo text];
     NSString *goodsPrice = [self.goodsPrice text];
-
-    NSDictionary *dit = [NSDictionary dictionaryWithObjectsAndKeys:user_id,@"userId",goodsName,@"name",goodsInfo,"info",goodsPrice,"price",@"1",@"status", nil];
-
     
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:user_id,@"userId",goodsName,@"name",goodsInfo,@"info",goodsPrice,@"price",@"1",@"status",nil];
+
+  
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -212,54 +214,79 @@
     manager.requestSerializer.timeoutInterval = 10.0f;
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"multipart/form-data", @"application/json", @"text/html", @"image/jpeg", @"image/png", @"application/octet-stream", @"text/json", nil];
     
-    
-    
-   
-    [manager POST:@"http://119.23.230.116/xianyu/upLoadGoods"parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSLog(@"有在上传吗");
-        NSLog(@"打印照片数组%@",self.imagesM);
-        for (int i = 0; i < self.imagesM.count; i++) {
-            
-            UIImage *image = self.imagesM[i];
-            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-            
-            // 在网络开发中，上传文件时，是文件不允许被覆盖，文件重名
-            // 要解决此问题，
-            // 可以在上传时使用当前的系统事件作为文件名
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            // 设置时间格式
-            [formatter setDateFormat:@"yyyyMMddHHmmss"];
-            NSString *dateString = [formatter stringFromDate:[NSDate date]];
-            NSString *fileName = [NSString  stringWithFormat:@"%@%d.jpg", dateString,i];
-            NSLog(@"%@",fileName);
-            
-            /*此方法参数
-             1. 要上传的[二进制数据]
-             2. 对应网站上[upload.php中]处理文件的[字段"file"]
-             3. 要保存在服务器上的[文件名]
-             4. 上传文件的[mimeType]
-             */
-            [formData appendPartWithFileData:imageData name:@"upload" fileName:fileName mimeType:@"image/jpeg"]; //  /jpg/png
-        }
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:@"http://119.23.230.116/xianyu/upLoadGoods" parameters:dict progress:^(NSProgress * _Nonnull uploadProgress) {
+        
         [SVProgressHUD showWithStatus:@"发布中..."];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"成功");
+        
+        NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSString *goodsid = [resultDic objectForKey:@"GoodsId"];
+        
+     
+        
+        for (int i = 0; i < self.imagesM.count; i++) {
+            [manager POST:@"http://119.23.230.116/xianyu/updateGoodsInfo"parameters:@{@"id":goodsid} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+                
+                NSLog(@"有在上传吗");
+                NSLog(@"打印照片数组%@",self.imagesM);
+                //  for (int i = 0; i < self.imagesM.count; i++) {
+                
+                UIImage *image = self.imagesM[i];
+                NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+                
+                // 在网络开发中，上传文件时，是文件不允许被覆盖，文件重名
+                // 要解决此问题，
+                // 可以在上传时使用当前的系统事件作为文件名
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                // 设置时间格式
+                [formatter setDateFormat:@"yyyyMMddHHmmss"];
+                NSString *dateString = [formatter stringFromDate:[NSDate date]];
+                NSString *fileName = [NSString  stringWithFormat:@"%@%d.jpg", dateString,i];
+                NSLog(@"%@",fileName);
+                /*
+                 此方法参数
+                 1. 要上传的[二进制数据]
+                 2. 对应网站上[upload.php中]处理文件的[字段"file"]
+                 3. 要保存在服务器上的[文件名]
+                 4. 上传文件的[mimeType]
+                 */
+                [formData appendPartWithFileData:imageData name:@"upload" fileName:fileName mimeType:@"image/jpeg"]; //  /jpg/png
+                
+                
+            } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                NSLog(@"成功");
+            
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                NSLog(@"失败");
+                [SVProgressHUD showErrorWithStatus:@"有图片上传失败"];
+                [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [SVProgressHUD dismiss];
+                });
+            }];
+        }
         [SVProgressHUD showSuccessWithStatus:@"发布成功！"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-          [SVProgressHUD dismiss];
+            [SVProgressHUD dismiss];
         });
         
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"失败");
         [SVProgressHUD showErrorWithStatus:@"无法连接到服务器"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
         });
     }];
+    
+    
+
 }
 
 /*

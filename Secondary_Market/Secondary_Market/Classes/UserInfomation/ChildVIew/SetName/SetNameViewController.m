@@ -132,9 +132,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
     self.cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
     self.cell.setField.text = [userDefaults objectForKey:@"name"];
+    
     
     
     return self.cell;

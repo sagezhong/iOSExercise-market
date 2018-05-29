@@ -13,7 +13,9 @@
 
 @interface SetSexViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, strong) TextFieldCell *cell;
+@property (nonatomic, strong) NSString *sexString;
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -38,26 +40,39 @@
     UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(click)];
     self.navigationItem.rightBarButtonItem = rightBarItem;
     
-    [self.view addSubview:tableView];
+    self.tableView = tableView;
+    
+    [self.view addSubview:self.tableView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    NSIndexPath * selIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView selectRowAtIndexPath:selIndex animated:YES scrollPosition:UITableViewScrollPositionTop];
+    NSIndexPath * path = [NSIndexPath indexPathForItem:0 inSection:0];
+    [self tableView:self.tableView didSelectRowAtIndexPath:path];
+}
+
+
+
 - (void)click {
     
 
-    NSString *userSex = [self.cell.setField text];
+ 
 
-    if (userSex.length > 3) {
+    if (self.sexString.length > 3) {
         [SVProgressHUD showInfoWithStatus:@"请输入男或女"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
         });
-    }else if ([userSex isEqual:@""]) {
-        [SVProgressHUD showInfoWithStatus:@"请输入男或者女"];
+    }else if ([self.sexString isEqual:@""]) {
+        [SVProgressHUD showInfoWithStatus:@"请选择男或者女"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
@@ -68,20 +83,21 @@
     
 }
 
+
 - (void)back {
     
     dispatch_async(dispatch_get_main_queue(), ^{
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         
         NSString *userID = [userDefaults objectForKey:@"id"];
-        NSString *userSex =[self.cell.setField text];
+        
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer.timeoutInterval = 10.0f;
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/plain", nil];
         
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"id",userSex,@"sex", nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"id",self.sexString,@"sex", nil];
         [manager POST:@"http://119.23.230.116/xianyu/updateUserById/" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [SVProgressHUD showInfoWithStatus:@"修改成功"];
             [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
@@ -94,7 +110,7 @@
             NSLog(@"%@",dic);
             
             
-            [userDefaults setObject:userSex forKey:@"sex"];
+            [userDefaults setObject:self.sexString forKey:@"sex"];
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [SVProgressHUD showInfoWithStatus:@"连接服务器失败"];
@@ -103,13 +119,8 @@
                 [SVProgressHUD dismiss];
             });
         }];
-        
-        
-        
-        
+
     });
-    
-    
     
     
 }
@@ -130,16 +141,36 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+   /* NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+    if (indexPath.row == 0) {
     self.cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
     self.cell.setField.text = [userDefaults objectForKey:@"sex"];
     
     return self.cell;
+    } else */ if (indexPath.row ==0 ){
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        
+        cell.textLabel.text = @"男";
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+        return  cell;
+        
+    }else {
+        
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        
+        cell.textLabel.text = @"女";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+       
+        return  cell;
+        
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -147,6 +178,34 @@
     
     return 15;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //取消选中cell状态
+   // [tableView deselectRowAtIndexPath:indexPath animated:YES];
+ 
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+    
+    self.sexString = cell.textLabel.text;
+   
+    
+    
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSIndexPath *oldIndex = [tableView indexPathForSelectedRow];
+    
+    [tableView cellForRowAtIndexPath:oldIndex].accessoryType = UITableViewCellAccessoryNone;
+    
+    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    return indexPath;
+    
+}
+
+
 
 
 @end

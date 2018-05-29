@@ -11,6 +11,8 @@
 
 @interface UserSetViewController ()
 
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 @implementation UserSetViewController
@@ -28,6 +30,8 @@
        
        NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
+    //退出登录按钮
+    
     UIButton *quiteBtn = [[UIButton alloc] init];
     quiteBtn.frame = CGRectMake(125/2, 500, 250, 40);
     [quiteBtn setTitle:@"退出登录" forState:UIControlStateNormal];
@@ -37,7 +41,6 @@
     [quiteBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     quiteBtn.layer.cornerRadius = 5;
     [quiteBtn addTarget:self action:@selector(Quit) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.view addSubview:quiteBtn];
 
 }
