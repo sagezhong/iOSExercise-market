@@ -26,5 +26,5 @@
 
 + (instancetype)order;
 
-- (goodsInfoModel *)turnGoodsInfoToModel:(NSDictionary *)dict
+- (goodsInfoModel *)turnGoodsInfoToModel:(NSDictionary *)dict;
 @end

@@ -201,9 +201,9 @@
     NSString *goodsName = [self.goodsName text];
     NSString *goodsInfo = [self.goodsInfo text];
     NSString *goodsPrice = [self.goodsPrice text];
-    
+
     NSDictionary *dit = [NSDictionary dictionaryWithObjectsAndKeys:user_id,@"userId",goodsName,@"name",goodsInfo,"info",goodsPrice,"price",@"1",@"status", nil];
-    
+
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 

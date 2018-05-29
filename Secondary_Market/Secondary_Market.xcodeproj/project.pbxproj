@@ -272,6 +272,21 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		0C6BDEA020BCFA8E009E36BE /* CheckGoodsView */ = {
+			isa = PBXGroup;
+			children = (
+				0C6BDEA120BCFAB8009E36BE /* Model */,
+			);
+			path = CheckGoodsView;
+			sourceTree = "<group>";
+		};
+		0C6BDEA120BCFAB8009E36BE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0C75C40420BA900A00DD47D4 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -434,6 +449,7 @@
 		83F67C4220B0519400B9292F /* FirstView */ = {
 			isa = PBXGroup;
 			children = (
+				0C6BDEA020BCFA8E009E36BE /* CheckGoodsView */,
 				0C6BDE9F20BC2E20009E36BE /* Model */,
 				0C75C40420BA900A00DD47D4 /* View */,
 				83F67C5020B054F000B9292F /* Controller */,

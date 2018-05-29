@@ -14,6 +14,7 @@
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 
+
 @interface FirstViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -168,7 +169,7 @@
     self.tableView.mj_header.automaticallyChangeAlpha = YES;
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDate)];
     //设置底部insert
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
     
 }
 
@@ -186,17 +187,102 @@
     [manager POST:@"http://119.23.230.116/xianyu/GoodsList" parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        //把json转成字典
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers |NSJSONReadingMutableLeaves error:nil];
+        //取出商品的json字符串
+        NSString *goodsJson = [dict objectForKey:@"list"];
+        
+        //把json转成二进制再转成数组
+        
+        NSArray *goodsArray;
+        
+        NSData *jsonData = [goodsJson dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *err;
+        goodsArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+        //移除当前数组
+        [self.modelArray removeAllObjects];
+        
+        //通过模型赋值
+        
+        for (NSDictionary *item in goodsArray) {
+            goodsInfoModel *model = [goodsInfoModel order];
+            [model turnGoodsInfoToModel:item];
+            [self.modelArray addObject:model];
+            
+        }
+        
+        [self.tableView reloadData];
+        
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        <#code#>
+        [SVProgressHUD showErrorWithStatus:@"无法连接到服务器"];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
     }];
     
-    
+    [self.tableView.mj_header endRefreshing];
 }
 
 //加载方法loadMoreDate
 - (void)loadMoreDate {
     
+    NSInteger i = self.modelArray.count;
+    NSInteger pagenumber;
+    
+    if ((i/10)*10 == i) {
+        pagenumber = (i/10) + 1;
+    }else {
+        pagenumber = (i/10) + 2;
+    }
+    
+    NSString *pagenumberStr = [NSString stringWithFormat:@"%ld",pagenumber];
+    
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"status",pagenumberStr,@"pageNumber" ,nil];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    [manager POST:@"http://119.23.230.116/xianyu/GoodsList" parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        //把json转成字典
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
+        //取出字典中的json字符串
+        NSString *goodsJson = [dict objectForKey:@"list"];
+        //把字符串转成二进制，再转成数组
+        NSArray *goodsArray;
+        
+        NSData *jsonData =[goodsJson dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *err;
+        goodsArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+        if (goodsArray.count == 0) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        } else {
+            //用模型赋值
+            for (NSDictionary *item in goodsArray) {
+                goodsInfoModel *model = [goodsInfoModel order];
+                [model turnGoodsInfoToModel:item];
+                [self.modelArray addObject:model];
+            }
+        }
+        [self.tableView reloadData];
+        
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD showErrorWithStatus:@"无法连接到服务器"];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    }];
+    
+    [self.tableView.mj_footer endRefreshing];
 }
 
 
@@ -208,11 +294,29 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //cell 的重用标识
+    static NSString *cellID = @"goodsCell";
+    //从重用队列中取出cell对象
+    GoodsTableViewCell * cell =(GoodsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
+    
+    if (cell == nil) {
+        cell = [[GoodsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+    goodsInfoModel *myGoods = _modelArray[indexPath.row];
+    
+    [cell setCellUserName:myGoods.userId];
+    [cell setCellGoodsName:myGoods.goodName];
+    [cell setCellCreateTime:myGoods.createTiem];
+    [cell setCellGoodsPrice:myGoods.goodPrice];
+    [cell setCellGoodsImage:myGoods.goodImage];
+    
+    return cell;
 
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    return 240;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -221,10 +325,7 @@
 }
 
 
-- (void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self.mySearchBar resignFirstResponder];
-}
+
 
 
 
