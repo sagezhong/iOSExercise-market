@@ -166,8 +166,10 @@
                //跳转至 首页
                RootViewController *vc = [[RootViewController alloc] init];
                [self presentViewController:vc animated:YES completion:nil];
-            
-                
+             
+               
+              
+               
                 
                 
             }
@@ -179,7 +181,7 @@
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             
-            [SVProgressHUD showInfoWithStatus:@"网络状态异常"];
+            [SVProgressHUD showInfoWithStatus:@"无法连接到服务器"];
             [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismiss];

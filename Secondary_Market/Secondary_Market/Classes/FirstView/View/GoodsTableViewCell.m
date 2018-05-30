@@ -23,9 +23,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
-    if (self == nil) {
+     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self addSubview];
     }
     return self;

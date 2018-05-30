@@ -222,7 +222,9 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSString *goodsid = [resultDic objectForKey:@"GoodsId"];
+        
+        NSString *goodsid = [resultDic objectForKey:@"goodsId"];
+        NSLog(@"打印看一下%@",goodsid);
         
      
         
@@ -259,6 +261,12 @@
 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 NSLog(@"成功");
+                
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+                
+                NSString *result = [dic objectForKey:@"message"];
+                
+                NSLog(@"结果%@",result);
             
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

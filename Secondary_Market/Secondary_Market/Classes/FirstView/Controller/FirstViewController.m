@@ -14,6 +14,12 @@
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 
+#ifdef DEBUG
+#define NSLog(FORMAT, ...) fprintf(stderr, "%s:%zd\t%s\n", [[[NSString stringWithUTF8String: __FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat: FORMAT, ## __VA_ARGS__] UTF8String]);
+#else
+#define NSLog(FORMAT, ...) nil
+#endif
+
 
 @interface FirstViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 
@@ -31,7 +37,12 @@
 
 @implementation FirstViewController
 
-
+- (NSMutableArray *)modelArray {
+    if (_modelArray == nil) {
+        _modelArray = [NSMutableArray array];
+    }
+    return _modelArray;
+}
 
 
 
@@ -109,7 +120,7 @@
     [self.view addSubview: _tableView];
     [self.view addSubview:self.myBar];
     
-    [self firstRequest];
+   [self firstRequest];
     [self setRefreshControls];
     
 }
@@ -127,26 +138,37 @@
     //发送请求
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/plain" ,nil];
     
     [manager POST:@"http://119.23.230.116/xianyu/GoodsList" parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        NSLog(@"%@",responseObject);
         //把json转成字典
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+    //    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
         
-        NSLog(@"打印看看里面是什么%@",dict);
+    //    NSLog(@"打印看看里面是什么%@",dict);
         //取出list中的json字符串
-        NSString *goodsJson = [dict objectForKey:@"list"];
+       // NSString *goodsJson = [responseObject objectForKey:@"list"];
+        NSArray *goodsArray = [responseObject objectForKey:@"list"];
         
-        NSArray *goodsArray;
+        NSLog(@"这个是什么 %@",goodsArray);
+
+        
+
         //把json字符串转成二进制流再转成数组
-        NSData *jsonData = [goodsJson dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *err;
-        goodsArray =[NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+        //NSString *change = [goodsJson stringByReplacingOccurrencesOfString:@"(" withString:@"["];
+        //NSString *result = [change stringByReplacingOccurrencesOfString:@")" withString:@"]"];
+        
+        
+        
+      //  NSData *jsonData = [result dataUsingEncoding:NSUTF8StringEncoding];
+       // NSError *err;
+        //goodsArray =[NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
         
         
         //通过循环把数组付给模型 然后再给cell数组
@@ -156,6 +178,7 @@
             [model turnGoodsInfoToModel:item];
             
             [self.modelArray addObject:model];
+            NSLog(@"看一看%@",item);
         }
      
         
@@ -194,7 +217,7 @@
     
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     //请求参数
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"status",@"1",@"pageNumber",nil];
     
@@ -203,29 +226,34 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         //把json转成字典
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers |NSJSONReadingMutableLeaves error:nil];
+      //  NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers |NSJSONReadingMutableLeaves error:nil];
         //取出商品的json字符串
-        NSString *goodsJson = [dict objectForKey:@"list"];
+         NSArray *goodsArray = [responseObject objectForKey:@"list"];
         
         //把json转成二进制再转成数组
         
-        NSArray *goodsArray;
+
         
-        NSData *jsonData = [goodsJson dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *err;
-        goodsArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+      //  NSData *jsonData = [goodsJson dataUsingEncoding:NSUTF8StringEncoding];
+      //  NSError *err;
+      //  goodsArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
         //移除当前数组
         [self.modelArray removeAllObjects];
         
         //通过模型赋值
         
         for (NSDictionary *item in goodsArray) {
+            NSLog(@"这是什么%@",item);
             goodsInfoModel *model = [goodsInfoModel order];
             [model turnGoodsInfoToModel:item];
+            NSLog(@"model正常吗%@",model.goodsId);
             [self.modelArray addObject:model];
+            NSLog(@"数组count%lu",(unsigned long)self.modelArray.count);
+            
+         
             
         }
-        
+        NSLog(@"数组正常吗%@",self.modelArray);
         [self.tableView reloadData];
         
         
@@ -270,8 +298,11 @@
         NSString *goodsJson = [dict objectForKey:@"list"];
         //把字符串转成二进制，再转成数组
         NSArray *goodsArray;
+        NSString *change = [goodsJson stringByReplacingOccurrencesOfString:@"(" withString:@"["];
+        NSString *result = [change stringByReplacingOccurrencesOfString:@")" withString:@"]"];
         
-        NSData *jsonData =[goodsJson dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSData *jsonData =[result dataUsingEncoding:NSUTF8StringEncoding];
         NSError *err;
         goodsArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
         if (goodsArray.count == 0) {
