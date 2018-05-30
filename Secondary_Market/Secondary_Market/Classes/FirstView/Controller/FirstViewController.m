@@ -15,7 +15,7 @@
 #import "SVProgressHUD.h"
 
 
-@interface FirstViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface FirstViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -50,29 +50,43 @@
     UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navBar.barTintColor = [UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1];
     //创建搜索框
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(50/2, 10, 200, 44)];
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 5, self.view.bounds.size.width-15, 30)];
     searchBar.placeholder = @"搜索商品";
     
     searchBar.showsCancelButton = NO;
+    searchBar.delegate = self;
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTitle:@"取消"];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor clearColor]} forState:UIControlStateHighlighted];
+
+
     
     self.mySearchBar = searchBar;
-    
+    for (UIView *view in self.mySearchBar.subviews) {
+       
+        if ([view isKindOfClass:NSClassFromString(@"UIView")] && view.subviews.count > 0) {
+            [[view.subviews objectAtIndex:0] removeFromSuperview];
+            break;
+        }
+    }
  
     //自定义导航栏组件
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
     
     // searchView 背景
-
-
-    navItem.titleView = searchBar;
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
+    bgView.backgroundColor = [UIColor clearColor];
+    [bgView addSubview:self.mySearchBar];
+   
+    navItem.titleView = bgView;
     
     //创建左侧按钮
   /*
-    UIBarButtonItem *leftButton =[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(click)];
+    UIBarButtonItem *leftButton =[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(click)];
     [leftButton setTintColor:[UIColor whiteColor]];
     [navItem setLeftBarButtonItem:leftButton];
-  
-*/
+  */
+
     [navBar pushNavigationItem:navItem animated:NO];
     self.myBar = navBar;
     
@@ -326,6 +340,16 @@
 
 
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    /* 点击button时以动画效果出现cancelButton */
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
 
 
 
