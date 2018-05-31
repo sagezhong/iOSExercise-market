@@ -31,83 +31,112 @@
 
 - (void)addSubview {
     //用户头像
-    _userImage = [[UIImageView alloc] init];
-    _userImage.frame = CGRectMake(20, 20, 40, 40);
-    [self addSubview:_userImage];
+    self.userImage = [[UIImageView alloc] init];
+    self.userImage.frame = CGRectMake(20, 20, 40, 40);
+    UIImage *image = [UIImage imageNamed:@"userImage"];
+    self.userImage.image =image;
+    [self addSubview:self.userImage];
     
     
     //用户名字
     
-    _userName = [[UILabel alloc] init];
-    _userName.frame = CGRectMake(70, 20, 150, 20);
-    _userName.font = [UIFont systemFontOfSize:18];
-    _userName.textColor = [UIColor blackColor];
+    self.userName = [[UILabel alloc] init];
+    self.userName.frame = CGRectMake(70, 20, 150, 20);
+    self.userName.font = [UIFont systemFontOfSize:18];
+    self.userName.textColor = [UIColor blackColor];
     
-    [self addSubview:_userName];
+    [self addSubview:self.userName];
     
     
     //发布时间
-    _createTime = [[UILabel alloc] init];
-    _createTime.frame = CGRectMake(70, 45, 150, 15);
-    _createTime.font = [UIFont systemFontOfSize:13];
-    _createTime.textColor = [UIColor lightGrayColor];
+    self.createTime = [[UILabel alloc] init];
+    self.createTime.frame = CGRectMake(70, 45, 150, 15);
+    self.createTime.font = [UIFont systemFontOfSize:13];
+    self.createTime.textColor = [UIColor lightGrayColor];
     
-    [self addSubview:_createTime];
+    [self addSubview:self.createTime];
     
     
     //商品价格
-    _goodsPrice = [[UILabel alloc] init];
-    _goodsPrice.frame = CGRectMake(self.bounds.size.width-80, 20, 80, 20);
-    _goodsPrice.font = [UIFont systemFontOfSize:18];
-    _goodsPrice.textColor = [UIColor redColor];
+    self.goodsPrice = [[UILabel alloc] init];
+    self.goodsPrice.frame = CGRectMake(self.bounds.size.width-70, 20, 100, 20);
+    self.goodsPrice.font = [UIFont systemFontOfSize:18];
+    self.goodsPrice.textColor = [UIColor redColor];
+    self.goodsPrice.textAlignment = NSTextAlignmentRight;
     
-    [self addSubview:_goodsPrice];
+    
+    
+    [self addSubview:self.goodsPrice];
     
     
     
     //图片
+
     
-    _goodsImage = [[PYPhotosView alloc] init];
-    _goodsImage.layoutType = 1;
-    _goodsImage.py_x = 20;
-    _goodsImage.py_y = 80;
-    _goodsImage.photoMargin = 5;
-    _goodsImage.photoWidth = 120;
-    _goodsImage.photoHeight = 100;
-    
-    [self addSubview:_goodsImage];
+    self.goodsImage = [[PYPhotosView alloc] init];
+
+    self.goodsImage.py_x = 20;
+    self.goodsImage.py_y = 80;
+    self.goodsImage.autoLayoutWithWeChatSytle = NO;
+    self.goodsImage.photosMaxCol = 10;
+    self.goodsImage.photoMargin = 20;
+    self.goodsImage.photoWidth = 120;
+    self.goodsImage.photoHeight = 100;
+    self.goodsImage.oneImageFullFrame = NO;
+  //  self.goodsImage.placeholderImage = [UIImage imageNamed:@"userImage"];
+    [self addSubview:self.goodsImage];
+   
     
     //商品标题
-    _goodsName = [[UILabel alloc] init];
-    _goodsName.frame = CGRectMake(20, 200, self.bounds.size.width, 20);
-    [_goodsName setFont:[UIFont fontWithName:@"Helvetica_Bold" size:19]];
-    _goodsName.textColor = [UIColor blackColor];
+    self.goodsName = [[UILabel alloc] init];
+    self.goodsName.frame = CGRectMake(20, 200, self.bounds.size.width, 20);
     
-    [self addSubview: _goodsName];
+    self.goodsName.textColor = [UIColor blackColor];
+    
+    [self addSubview: self.goodsName];
     
 }
 
 - (void)setCellGoodsImage:(NSString *)string {
     //设置物品图片, NSString切割
-    NSArray *array = [string componentsSeparatedByString:@"|"];
-    _goodsImage.originalUrls = array;
-    _goodsImage.thumbnailUrls = array;
+    //去掉string第一个字符
+    NSArray *array;
+    if (string.length > 1) {
+        NSString *string1 =[string substringFromIndex:1];
+        NSString *string2 = [string1 substringWithRange:NSMakeRange(0, [string1 length]-1)];
+        array = [string2 componentsSeparatedByString:@"|"];
+    } else {
+        array = [string componentsSeparatedByString:@"|"];
+    }
+
+    
+    
+
+    self.goodsImage.originalUrls = array;
+    self.goodsImage.thumbnailUrls = array;
+    NSLog(@"打印看一下%@",array);
+    
+    CGSize mysize = [self.goodsImage sizeWithPhotoCount:array.count photosState:0];
+    NSLog(@"%f",mysize.width);
+    NSLog(@"%f",mysize.height);
+   
 }
 
 - (void)setCellUserName:(NSString *)string {
-    _userName.text = string;
+    self.userName.text = string;
 }
 
-- (void)setCellGoodsPrice:(NSString *)string {
-    _goodsPrice.text = string;
+- (void)setCellGoodsPrice:(NSNumber *)string {
+    self.goodsPrice.text = [NSString stringWithFormat:@"¥%@",string];
 }
 
 - (void)setCellGoodsName:(NSString *)string {
-    _goodsName.text = string;
+    self.goodsName.text = string;
 }
 
 - (void)setCellCreateTime:(NSString *)string {
-    _createTime.text = string;
+    self.createTime.text = string;
+
 }
 
 

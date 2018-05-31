@@ -1,14 +1,14 @@
 //
-//  goodsInfoModel.h
+//  CheckGoodsModel.h
 //  Secondary_Market
 //
-//  Created by Maktub on 28/5/18.
+//  Created by Maktub on 30/5/18.
 //  Copyright © 2018年 sagezhong. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface goodsInfoModel : NSObject
+@interface CheckGoodsModel : NSObject
 
 @property (nonatomic , strong) NSString *goodsId;   //订单编号
 
@@ -22,9 +22,10 @@
 
 @property (nonatomic, strong) NSString *createTiem; //发布时间
 
-@property (nonatomic, strong) NSNumber* goodPrice;   //价格
+@property (nonatomic, strong) NSNumber *goodPrice;   //价格
 
 + (instancetype)order;
 
-- (goodsInfoModel *)turnGoodsInfoToModel:(NSDictionary *)dict;
+- (CheckGoodsModel *)turnGoodsInfoToModel:(NSDictionary *)dict;
+
 @end

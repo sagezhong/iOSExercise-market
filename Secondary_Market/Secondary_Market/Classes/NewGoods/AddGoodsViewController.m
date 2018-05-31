@@ -47,9 +47,7 @@
     if (_imagesM == nil) {
         _imagesM = [NSMutableArray array];
     }
-    if (_imagesM.count > 3) {
-        [_imagesM removeObjectAtIndex:0];
-    }
+  
     return _imagesM;
 }
 
@@ -125,24 +123,25 @@
     lineView2.backgroundColor = myGraycolor;
     [bgView addSubview:lineView2];
     //图片
-    _photoBackgroundView = [[UIView alloc] init];
-    _photoBackgroundView.frame = CGRectMake(20, 265, bgView.bounds.size.width, bgView.bounds.size.width);
-    
-    [bgView addSubview:_photoBackgroundView];
+   
     
     //创建 一个发布图片时的photosView
     PYPhotosView *publishPhotosView = [PYPhotosView photosView];
-    publishPhotosView.py_x = 0;
-    publishPhotosView.py_y = 0;
-    publishPhotosView.photoWidth = 100;
-    publishPhotosView.photoHeight = 100;
+    publishPhotosView.py_x = 20;
+    publishPhotosView.py_y = 245;
+    publishPhotosView.photoWidth = 50;
+    publishPhotosView.photoHeight = 50;
     publishPhotosView.photoMargin = 25;
-    publishPhotosView.photosMaxCol = 3;
-    publishPhotosView.imagesMaxCountWhenWillCompose = 3;
+    publishPhotosView.photosMaxCol = 5 ;
+   
     publishPhotosView.images = self.imagesM;
     publishPhotosView.delegate = self;
-    [_photoBackgroundView addSubview:publishPhotosView];
+
+
     self.publishPhotosView = publishPhotosView;
+    [bgView addSubview:self.publishPhotosView];
+
+
     
     //价格输入框背景
    // UIView *bgView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 400, self.view.bounds.size.width, 100)];
@@ -211,7 +210,7 @@
 
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 10.0f;
+    manager.requestSerializer.timeoutInterval = 20.0f;
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"multipart/form-data", @"application/json", @"text/html", @"image/jpeg", @"image/png", @"application/octet-stream", @"text/json", nil];
     
     [manager POST:@"http://119.23.230.116/xianyu/upLoadGoods" parameters:dict progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -226,34 +225,21 @@
         NSString *goodsid = [resultDic objectForKey:@"goodsId"];
         NSLog(@"打印看一下%@",goodsid);
         
-     
+ 
         
         for (int i = 0; i < self.imagesM.count; i++) {
-            [manager POST:@"http://119.23.230.116/xianyu/updateGoodsInfo"parameters:@{@"id":goodsid} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-                
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [manager POST:@"http://119.23.230.116/xianyu/updateGoodsInfo"parameters:@{@"id":goodsid,@"image":@""} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 NSLog(@"有在上传吗");
-                NSLog(@"打印照片数组%@",self.imagesM);
-                //  for (int i = 0; i < self.imagesM.count; i++) {
-                
+            NSLog(@"%lu",(unsigned long)self.imagesM.count);
+               
                 UIImage *image = self.imagesM[i];
                 NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-                
-                // 在网络开发中，上传文件时，是文件不允许被覆盖，文件重名
-                // 要解决此问题，
-                // 可以在上传时使用当前的系统事件作为文件名
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                // 设置时间格式
                 [formatter setDateFormat:@"yyyyMMddHHmmss"];
                 NSString *dateString = [formatter stringFromDate:[NSDate date]];
                 NSString *fileName = [NSString  stringWithFormat:@"%@%d.jpg", dateString,i];
                 NSLog(@"%@",fileName);
-                /*
-                 此方法参数
-                 1. 要上传的[二进制数据]
-                 2. 对应网站上[upload.php中]处理文件的[字段"file"]
-                 3. 要保存在服务器上的[文件名]
-                 4. 上传文件的[mimeType]
-                 */
                 [formData appendPartWithFileData:imageData name:@"upload" fileName:fileName mimeType:@"image/jpeg"]; //  /jpg/png
                 
                 
@@ -261,14 +247,9 @@
 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 NSLog(@"成功");
-                
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-                
                 NSString *result = [dic objectForKey:@"message"];
-                
                 NSLog(@"结果%@",result);
-            
-                
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"失败");
                 [SVProgressHUD showErrorWithStatus:@"有图片上传失败"];
@@ -277,7 +258,9 @@
                     [SVProgressHUD dismiss];
                 });
             }];
+         });
         }
+       
         [SVProgressHUD showSuccessWithStatus:@"发布成功！"];
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -364,7 +347,7 @@
 
 - (void)photosView:(PYPhotosView *)photosView didAddImageClickedWithImages:(NSMutableArray *)images
 {
-    TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:self];
+    TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:10 delegate:self];
     [imagePickerVC setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         for (int i = 0; i < photos.count; i++) {
             [self.imagesM addObject:photos[i]];

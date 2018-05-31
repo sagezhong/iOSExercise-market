@@ -11,6 +11,7 @@
 #import "UserTableViewCell.h"
 #import "UserInfoViewController.h"
 #import "UserSetViewController.h"
+#import "MoneyViewController.h"
 
 @interface UserViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -62,7 +63,7 @@
 //返回多少组cell
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 
@@ -71,7 +72,7 @@
     if (section == 0) {
     return 1;
     }
-    if (section == 1) {
+    if (section == 2) {
         return 5;
     }
     else {
@@ -84,8 +85,16 @@
     if (indexPath.section == 0) {
     UserTableViewCell *cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
     return cell;
-    }
-    if (indexPath.section ==1) {
+    } else if (indexPath.section == 1) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        cell.textLabel.text = @"我的钱包";
+        cell.imageView.image = [UIImage imageNamed:@"钱包"];
+        cell.detailTextLabel.text = @"0";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        return cell;
+        
+    } else if (indexPath.section == 2) {
         
         if (indexPath.row == 0) {
             
@@ -167,7 +176,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 10;
+    return 5;
 }
 
 //选择cell后的代理方法
@@ -179,8 +188,14 @@
         [self.navigationController pushViewController:UserVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;
     }
+    if (indexPath.section == 1) {
+        self.hidesBottomBarWhenPushed = YES;
+        MoneyViewController *vc = [[MoneyViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    }
     
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         
         self.hidesBottomBarWhenPushed = YES;
         UserSetViewController *UserSetVC = [[UserSetViewController alloc] init];

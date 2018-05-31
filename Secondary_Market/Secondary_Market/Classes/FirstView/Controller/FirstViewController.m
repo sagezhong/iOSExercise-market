@@ -13,7 +13,7 @@
 #import "MJRefresh.h"
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
-
+#import "CheckGoodsViewController.h"
 #ifdef DEBUG
 #define NSLog(FORMAT, ...) fprintf(stderr, "%s:%zd\t%s\n", [[[NSString stringWithUTF8String: __FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat: FORMAT, ## __VA_ARGS__] UTF8String]);
 #else
@@ -25,13 +25,13 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) UINavigationBar *myBar;
-
 @property (nonatomic, strong) UISearchBar *mySearchBar;
 
 @property (nonatomic, strong) NSArray *imageM;
 
 @property (nonatomic, strong) NSMutableArray *modelArray;
+
+@property (nonatomic, strong) NSMutableArray *nextArray;
 
 @end
 
@@ -44,6 +44,12 @@
     return _modelArray;
 }
 
+- (NSMutableArray *)nextArray {
+    if (_nextArray == nil) {
+        _nextArray = [NSMutableArray array];
+    }
+    return _nextArray;
+}
 
 
 - (void)viewDidLoad {
@@ -52,14 +58,14 @@
     self.title =@"首页";
     self.view.backgroundColor = [UIColor whiteColor];
     // tableView视图
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStyleGrouped];
     
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     
     //自定义navbar
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-    navBar.barTintColor = [UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1];
+  //  UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+   // navBar.barTintColor = [UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1];
     //创建搜索框
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 5, self.view.bounds.size.width-15, 30)];
     searchBar.placeholder = @"搜索商品";
@@ -82,14 +88,14 @@
     }
  
     //自定义导航栏组件
-    UINavigationItem *navItem = [[UINavigationItem alloc] init];
+   // UINavigationItem *navItem = [[UINavigationItem alloc] init];
     
     // searchView 背景
     UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
     bgView.backgroundColor = [UIColor clearColor];
     [bgView addSubview:self.mySearchBar];
    
-    navItem.titleView = bgView;
+    self.navigationItem.titleView = bgView;
     
     //创建左侧按钮
   /*
@@ -98,8 +104,8 @@
     [navItem setLeftBarButtonItem:leftButton];
   */
 
-    [navBar pushNavigationItem:navItem animated:NO];
-    self.myBar = navBar;
+   // [navBar pushNavigationItem:navItem animated:NO];
+   // self.myBar = navBar;
     
     //创建图片轮播器
     UIImage *image1 =[UIImage imageNamed:@"1"];
@@ -111,14 +117,14 @@
     self.imageM = [NSArray arrayWithObjects:image1,image2,image3,image4,image5, nil];
     
     
-    SDCycleScrollView *imageScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 200) imageNamesGroup:self.imageM];
+    SDCycleScrollView *imageScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 170) imageNamesGroup:self.imageM];
     
     _tableView.tableHeaderView =imageScrollView;
     
     
 
-    [self.view addSubview: _tableView];
-    [self.view addSubview:self.myBar];
+    [self.view addSubview: self.tableView];
+   // [self.view addSubview:self.myBar];
     
    [self firstRequest];
     [self setRefreshControls];
@@ -147,7 +153,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",responseObject);
+     //   NSLog(@"%@",responseObject);
         //把json转成字典
     //    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
         
@@ -156,7 +162,7 @@
        // NSString *goodsJson = [responseObject objectForKey:@"list"];
         NSArray *goodsArray = [responseObject objectForKey:@"list"];
         
-        NSLog(@"这个是什么 %@",goodsArray);
+      //  NSLog(@"这个是什么 %@",goodsArray);
 
         
 
@@ -176,11 +182,14 @@
         for (NSDictionary *item in goodsArray) {
             goodsInfoModel *model = [goodsInfoModel order];
             [model turnGoodsInfoToModel:item];
+            [self.nextArray addObject:item];
             
             [self.modelArray addObject:model];
-            NSLog(@"看一看%@",item);
+           
+         //   NSLog(@"看一看NextArray%@",self.nextArray);
         }
-     
+      //  NSLog(@"看看数组有没有：%@",self.modelArray);
+        [self.tableView reloadData];
         
         
         
@@ -205,6 +214,8 @@
     }];
     self.tableView.mj_header.automaticallyChangeAlpha = YES;
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDate)];
+ 
+   
     //设置底部insert
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
     
@@ -212,11 +223,12 @@
 
 //刷新方法loadNewDate
 - (void)loadNewData {
+    NSLog(@"刷新了吗");
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    
+    manager.requestSerializer.timeoutInterval = 3.0f;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     //请求参数
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"status",@"1",@"pageNumber",nil];
@@ -244,16 +256,19 @@
         
         for (NSDictionary *item in goodsArray) {
             NSLog(@"这是什么%@",item);
+            [self.nextArray addObject:item];
             goodsInfoModel *model = [goodsInfoModel order];
             [model turnGoodsInfoToModel:item];
             NSLog(@"model正常吗%@",model.goodsId);
             [self.modelArray addObject:model];
-            NSLog(@"数组count%lu",(unsigned long)self.modelArray.count);
+            
             
          
             
         }
         NSLog(@"数组正常吗%@",self.modelArray);
+        //刷新 回调成功的话 重新给设置一次上拉加载，就没有如果加载全部后再刷新上拉不会加载的问题了。
+        self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDate)];
         [self.tableView reloadData];
         
         
@@ -295,21 +310,17 @@
         //把json转成字典
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
         //取出字典中的json字符串
-        NSString *goodsJson = [dict objectForKey:@"list"];
-        //把字符串转成二进制，再转成数组
-        NSArray *goodsArray;
-        NSString *change = [goodsJson stringByReplacingOccurrencesOfString:@"(" withString:@"["];
-        NSString *result = [change stringByReplacingOccurrencesOfString:@")" withString:@"]"];
+        NSArray *goodsArray = [dict objectForKey:@"list"];
         
         
-        NSData *jsonData =[result dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *err;
-        goodsArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+        
+      
         if (goodsArray.count == 0) {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
         } else {
             //用模型赋值
             for (NSDictionary *item in goodsArray) {
+                [self.nextArray addObject:item];
                 goodsInfoModel *model = [goodsInfoModel order];
                 [model turnGoodsInfoToModel:item];
                 [self.modelArray addObject:model];
@@ -331,31 +342,48 @@
 }
 
 
-
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"打印看看%lu",(unsigned long)self.modelArray.count);
     return self.modelArray.count;
+  
 }
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //cell 的重用标识
     static NSString *cellID = @"goodsCell";
     //从重用队列中取出cell对象
     GoodsTableViewCell * cell =(GoodsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
-    
+  
     if (cell == nil) {
         cell = [[GoodsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-    goodsInfoModel *myGoods = _modelArray[indexPath.row];
-    
+    goodsInfoModel *myGoods = self.modelArray[indexPath.row];
+    NSLog(@"看看mygoods%@",myGoods.userId);
     [cell setCellUserName:myGoods.userId];
+    NSLog(@"看一下goodname%@",myGoods.goodName);
     [cell setCellGoodsName:myGoods.goodName];
+    NSLog(@"看一下time%@",myGoods.createTiem);
     [cell setCellCreateTime:myGoods.createTiem];
+    NSLog(@"看一下price%@",myGoods.goodPrice);
     [cell setCellGoodsPrice:myGoods.goodPrice];
+    NSLog(@"看一下image%@",myGoods.goodImage);
     [cell setCellGoodsImage:myGoods.goodImage];
-    
+  
+  //  UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    //cell.textLabel.text = @"测试";
+//    [cell setCellUserName:@"测试"];
+//    [cell setCellCreateTime:@"2018"];
+//    [cell setCellGoodsName:@"测试"];
+//    [cell setCellGoodsPrice:@"100"];
+//    [cell setCellGoodsImage:@"https://wx1.sinaimg.cn/mw690/48fb9c13ly1frnz0c6739j2vr1kz.jpg|https://wx2.sinaimg.cn/mw690/48fb9c13ly1frnz0iz1lmj22z01zd1ky.jpg|https://winaimg.cn/mw690/48fb9c13ly1frnz0iz1lmj22z01zd1ky.jpg|https://wx2.sinaimg.cn/mw690/48fb9c13ly1frnz1tp20u00k0wip.jpg"];
     return cell;
 
 }
@@ -367,6 +395,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 15;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return  0.01;
 }
 
 
@@ -382,6 +415,16 @@
     [searchBar setShowsCancelButton:YES animated:YES];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CheckGoodsViewController *vc = [[CheckGoodsViewController alloc] init];
+    [vc setModelWIthGoodsDictionry:self.nextArray[indexPath.row]];
+   // NSLog(@"打印看一下有没有%@",self.nextArray[indexPath.row]);
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+     self.hidesBottomBarWhenPushed = NO;
+  
+}
 
 
 @end
