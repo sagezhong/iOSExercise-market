@@ -21,6 +21,8 @@
 		0C6BDEA820C005B5009E36BE /* CheckGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BDEA720C005B5009E36BE /* CheckGoodsViewController.m */; };
 		0C6BDEAE20C0404F009E36BE /* MoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BDEAD20C0404F009E36BE /* MoneyViewController.m */; };
 		0C6BDEB120C041B4009E36BE /* MoneyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BDEB020C041B4009E36BE /* MoneyTableViewCell.m */; };
+		0C6BDEB520C17BD7009E36BE /* CompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BDEB420C17BD7009E36BE /* CompleteViewController.m */; };
+		0C6BDEB920C1A26B009E36BE /* goodsInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BDEB820C1A26B009E36BE /* goodsInfoTableViewCell.m */; };
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
 		0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2A20B1923E00B5C834 /* LoginNavController.m */; };
 		8305560120C120C100DC21BA /* InsertMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8305560020C120C100DC21BA /* InsertMoneyViewController.m */; };
@@ -96,6 +98,10 @@
 		0C6BDEAD20C0404F009E36BE /* MoneyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoneyViewController.m; sourceTree = "<group>"; };
 		0C6BDEAF20C041B4009E36BE /* MoneyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoneyTableViewCell.h; sourceTree = "<group>"; };
 		0C6BDEB020C041B4009E36BE /* MoneyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoneyTableViewCell.m; sourceTree = "<group>"; };
+		0C6BDEB320C17BD7009E36BE /* CompleteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompleteViewController.h; sourceTree = "<group>"; };
+		0C6BDEB420C17BD7009E36BE /* CompleteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompleteViewController.m; sourceTree = "<group>"; };
+		0C6BDEB720C1A26B009E36BE /* goodsInfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goodsInfoTableViewCell.h; sourceTree = "<group>"; };
+		0C6BDEB820C1A26B009E36BE /* goodsInfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = goodsInfoTableViewCell.m; sourceTree = "<group>"; };
 		0C782A2620B18F1400B5C834 /* LoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		0C782A2720B18F1400B5C834 /* LoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		0C782A2920B1923E00B5C834 /* LoginNavController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNavController.h; sourceTree = "<group>"; };
@@ -290,6 +296,7 @@
 		0C6BDEA020BCFA8E009E36BE /* CheckGoodsView */ = {
 			isa = PBXGroup;
 			children = (
+				0C6BDEB620C1A198009E36BE /* View */,
 				0C6BDEA120BCFAB8009E36BE /* Model */,
 				0C6BDEA520C00588009E36BE /* Controller */,
 			);
@@ -342,6 +349,24 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		0C6BDEB220C17B6E009E36BE /* complete */ = {
+			isa = PBXGroup;
+			children = (
+				0C6BDEB320C17BD7009E36BE /* CompleteViewController.h */,
+				0C6BDEB420C17BD7009E36BE /* CompleteViewController.m */,
+			);
+			path = complete;
+			sourceTree = "<group>";
+		};
+		0C6BDEB620C1A198009E36BE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0C6BDEB720C1A26B009E36BE /* goodsInfoTableViewCell.h */,
+				0C6BDEB820C1A26B009E36BE /* goodsInfoTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		0C75C40420BA900A00DD47D4 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +397,7 @@
 		830555FE20C1209400DC21BA /* insertMoney */ = {
 			isa = PBXGroup;
 			children = (
+				0C6BDEB220C17B6E009E36BE /* complete */,
 				830555FF20C120C100DC21BA /* InsertMoneyViewController.h */,
 				8305560020C120C100DC21BA /* InsertMoneyViewController.m */,
 			);
@@ -843,6 +869,7 @@
 				0C6BDEA820C005B5009E36BE /* CheckGoodsViewController.m in Sources */,
 				0C67CACF20B6E73900B1CCC4 /* SetPhoneViewController.m in Sources */,
 				0C782A2820B18F1400B5C834 /* LoginView.m in Sources */,
+				0C6BDEB920C1A26B009E36BE /* goodsInfoTableViewCell.m in Sources */,
 				83F67C6020B065E500B9292F /* FirstViewController.m in Sources */,
 				83F67C8020B1138D00B9292F /* LoginViewController.m in Sources */,
 				0C6BDEB120C041B4009E36BE /* MoneyTableViewCell.m in Sources */,
@@ -859,6 +886,7 @@
 				83F67C6920B066AA00B9292F /* UserViewController.m in Sources */,
 				83F67C5720B055F200B9292F /* MessageViewNavController.m in Sources */,
 				83F67C1020B04F4200B9292F /* AppDelegate.m in Sources */,
+				0C6BDEB520C17BD7009E36BE /* CompleteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

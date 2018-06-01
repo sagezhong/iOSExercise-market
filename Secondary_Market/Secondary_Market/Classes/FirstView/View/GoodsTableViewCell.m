@@ -114,11 +114,10 @@
 
     self.goodsImage.originalUrls = array;
     self.goodsImage.thumbnailUrls = array;
-    NSLog(@"打印看一下%@",array);
+   // NSLog(@"打印看一下%@",array);
     
-    CGSize mysize = [self.goodsImage sizeWithPhotoCount:array.count photosState:0];
-    NSLog(@"%f",mysize.width);
-    NSLog(@"%f",mysize.height);
+    
+ 
    
 }
 

@@ -7,7 +7,8 @@
 //
 
 #import "InsertMoneyViewController.h"
-
+#import "CompleteViewController.h"
+#define myGraycolor [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1]
 @interface InsertMoneyViewController ()
 
 @property (nonatomic, strong) UILabel *moneyNumeber;
@@ -20,7 +21,7 @@
     [super viewDidLoad];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *money = [userDefaults objectForKey:@"money"];
+    NSNumber *money = [userDefaults objectForKey:@"balance"];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"零钱";
@@ -35,11 +36,11 @@
     
  //   [self.view addSubview:moneyLable];
     
-    UILabel *moneyNumber = [[UILabel alloc] initWithFrame:CGRectMake(175/2, 220, 200, 80)];
-    moneyNumber.text = [NSString stringWithFormat:@"¥%@",money];
-    moneyNumber.textAlignment = NSTextAlignmentCenter;
-    moneyNumber.font = [UIFont systemFontOfSize:50];
-    self.moneyNumeber = moneyNumber;
+    self.moneyNumeber = [[UILabel alloc] initWithFrame:CGRectMake(175/2, 220, 200, 80)];
+    self.moneyNumeber.text = [NSString stringWithFormat:@"¥%@",money];
+    self.moneyNumeber.textAlignment = NSTextAlignmentCenter;
+    self.moneyNumeber.font = [UIFont systemFontOfSize:50];
+    
  //   [self.view addSubview:moneyNumber];
     
     UIButton *insertBtn = [[UIButton alloc] initWithFrame:CGRectMake(75/2, 320, 300, 40)];
@@ -55,6 +56,7 @@
     
     UIScrollView *bgView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     bgView.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height-44);
+    bgView.backgroundColor = myGraycolor;
     bgView.showsVerticalScrollIndicator = NO;
     [bgView addSubview:moneyViwe];
     [bgView addSubview:moneyLable];
@@ -72,8 +74,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insert {
+- (void)viewWillAppear:(BOOL)animated {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *money = [userDefaults objectForKey:@"balance"];
+    self.moneyNumeber.text = [NSString stringWithFormat:@"¥%@",money];
+    [self.moneyNumeber setNeedsDisplay];
     
+    
+}
+
+- (void)insert {
+    CompleteViewController *vc = [[CompleteViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
     
 }
 

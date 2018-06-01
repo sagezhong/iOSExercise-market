@@ -89,7 +89,7 @@
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         cell.textLabel.text = @"我的钱包";
         cell.imageView.image = [UIImage imageNamed:@"钱包"];
-        cell.detailTextLabel.text = @"0";
+       
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         return cell;

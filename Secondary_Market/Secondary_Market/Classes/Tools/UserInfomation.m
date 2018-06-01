@@ -46,9 +46,10 @@
     if ([userRegisterTime isKindOfClass:[NSNull class]]) {
         userRegisterTime = [[NSString alloc] init];                              // 用户注册时间
     }
-    NSString *userMoney = [userDictionry objectForKey:@"money"];
+   
+    NSNumber *userMoney = [userDictionry objectForKey:@"balance"];
     if ([userMoney isKindOfClass:[NSNull class]]) {
-        userMoney = @"0";
+        userMoney = 0;
     }
     
 
@@ -62,7 +63,7 @@
     [userDefaults setObject:userSex forKey:@"sex"];
     [userDefaults setObject:userDepartment forKey:@"department"];
     [userDefaults setObject:userRegisterTime forKey:@"registertime"];
-    [userDefaults setObject:userMoney forKey:@"money"];
+    [userDefaults setObject:userMoney forKey:@"balance"];
   //  [userDefaults setObject:userDic forKey:@"userInformation"];
     [userDefaults synchronize];
     

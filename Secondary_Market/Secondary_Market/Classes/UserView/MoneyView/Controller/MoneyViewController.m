@@ -55,7 +55,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *money = [userDefaults objectForKey:@"money"];
+    NSNumber *money = [userDefaults objectForKey:@"balance"];
     MoneyTableViewCell *cell = [[MoneyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
     cell.money.text = @"零钱";
