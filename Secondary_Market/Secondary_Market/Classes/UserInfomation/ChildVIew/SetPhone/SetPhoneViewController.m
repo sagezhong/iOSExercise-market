@@ -36,11 +36,16 @@
     self.navigationItem.rightBarButtonItem = rightBarItem;
     
     [self.view addSubview:tableView];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
 }
 - (void)click {
     
@@ -131,6 +136,7 @@
     self.cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
     self.cell.setField.text = [userDefaults objectForKey:@"phone"];
     self.cell.setField.keyboardType = UIKeyboardTypeNumberPad;
+    [self.cell.setField becomeFirstResponder];
     
     
     return self.cell;

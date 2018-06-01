@@ -14,5 +14,7 @@
 
 @property (nonatomic, strong) UILabel *money;
 
+@property (nonatomic, strong) UILabel *moneyNumber;
+
 
 @end

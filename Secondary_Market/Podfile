@@ -13,5 +13,6 @@ target 'Secondary_Market' do
   pod 'PYPhotoBrowser'
   pod 'SDCycleScrollView'
   pod 'SDWebImage', '~> 4.2.1'
-
+  pod 'YYText'
+  pod 'DZNEmptyDataSet'
 end

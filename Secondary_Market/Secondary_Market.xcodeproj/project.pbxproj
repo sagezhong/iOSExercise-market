@@ -23,6 +23,7 @@
 		0C6BDEB120C041B4009E36BE /* MoneyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BDEB020C041B4009E36BE /* MoneyTableViewCell.m */; };
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
 		0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2A20B1923E00B5C834 /* LoginNavController.m */; };
+		8305560120C120C100DC21BA /* InsertMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8305560020C120C100DC21BA /* InsertMoneyViewController.m */; };
 		831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 831295B120B2C0B40019F6C3 /* UserInfomation.m */; };
 		8338D19620B65214008B9343 /* UserSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8338D19520B65214008B9343 /* UserSetViewController.m */; };
 		8338D19B20B6B0A7008B9343 /* SetNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8338D19A20B6B0A7008B9343 /* SetNameViewController.m */; };
@@ -100,6 +101,8 @@
 		0C782A2920B1923E00B5C834 /* LoginNavController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNavController.h; sourceTree = "<group>"; };
 		0C782A2A20B1923E00B5C834 /* LoginNavController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginNavController.m; sourceTree = "<group>"; };
 		53B3CC458F0D252F890DEDFD /* libPods-Secondary_Market.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Secondary_Market.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		830555FF20C120C100DC21BA /* InsertMoneyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InsertMoneyViewController.h; sourceTree = "<group>"; };
+		8305560020C120C100DC21BA /* InsertMoneyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InsertMoneyViewController.m; sourceTree = "<group>"; };
 		831295B020B2C0B40019F6C3 /* UserInfomation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfomation.h; sourceTree = "<group>"; };
 		831295B120B2C0B40019F6C3 /* UserInfomation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfomation.m; sourceTree = "<group>"; };
 		8338D19420B65214008B9343 /* UserSetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserSetViewController.h; sourceTree = "<group>"; };
@@ -179,8 +182,8 @@
 		0C1F449520B2EAB900D177A5 /* RegisterView */ = {
 			isa = PBXGroup;
 			children = (
-				0C1F449720B2EB2A00D177A5 /* Controller */,
 				0C1F449620B2EB2000D177A5 /* View */,
+				0C1F449720B2EB2A00D177A5 /* Controller */,
 			);
 			path = RegisterView;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 		0C6BDEA920C04010009E36BE /* MoneyView */ = {
 			isa = PBXGroup;
 			children = (
+				830555FE20C1209400DC21BA /* insertMoney */,
 				0C6BDEAB20C0403C009E36BE /* Controller */,
 				0C6BDEAA20C04034009E36BE /* View */,
 			);
@@ -363,6 +367,15 @@
 				E55E5E46DE5B97FFC2DB5559 /* Pods-Secondary_Market.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		830555FE20C1209400DC21BA /* insertMoney */ = {
+			isa = PBXGroup;
+			children = (
+				830555FF20C120C100DC21BA /* InsertMoneyViewController.h */,
+				8305560020C120C100DC21BA /* InsertMoneyViewController.m */,
+			);
+			path = insertMoney;
 			sourceTree = "<group>";
 		};
 		831295AF20B2C0040019F6C3 /* Tools */ = {
@@ -813,6 +826,7 @@
 			files = (
 				831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */,
 				83F67C1320B04F4200B9292F /* ViewController.m in Sources */,
+				8305560120C120C100DC21BA /* InsertMoneyViewController.m in Sources */,
 				0C6BDEA420BEE3DB009E36BE /* CheckGoodsModel.m in Sources */,
 				0C6BDEAE20C0404F009E36BE /* MoneyViewController.m in Sources */,
 				8338D19B20B6B0A7008B9343 /* SetNameViewController.m in Sources */,

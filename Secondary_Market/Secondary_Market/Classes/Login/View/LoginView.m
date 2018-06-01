@@ -30,6 +30,7 @@
     UIImage *passwordImage = [UIImage imageNamed:@"password"];
     self.passwordView = [[UIImageView alloc] initWithImage:passwordImage];
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     
     //账户输入框
@@ -41,6 +42,7 @@
     self.userName.leftViewMode = UITextFieldViewModeAlways;
     self.userName.keyboardType = UIKeyboardTypeNumberPad;
     self.userName.clearButtonMode = UITextFieldViewModeAlways;
+    self.userName.text = [userDefaults objectForKey:@"id"];
     [self addSubview:self.userName];
 
     //密码输入框

@@ -136,6 +136,7 @@
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
     self.cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
     self.cell.setField.text = [userDefaults objectForKey:@"name"];
+    [self.cell.setField becomeFirstResponder];
     
     
     
