@@ -59,7 +59,7 @@
     MoneyTableViewCell *cell = [[MoneyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
     cell.money.text = @"零钱";
-    cell.moneyNumber.text = [NSString stringWithFormat:@"¥%@",money];
+    cell.moneyNumber.text = [NSString stringWithFormat:@"%@",money];
     return cell;
     
 }

@@ -136,6 +136,7 @@
     self.cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:nil];
     self.cell.setField.text = [userDefaults objectForKey:@"phone"];
     self.cell.setField.keyboardType = UIKeyboardTypeNumberPad;
+    self.cell.setField.tintColor = [UIColor blackColor];
     [self.cell.setField becomeFirstResponder];
     
     

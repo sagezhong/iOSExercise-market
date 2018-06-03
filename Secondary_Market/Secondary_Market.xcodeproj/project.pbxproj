@@ -25,6 +25,9 @@
 		0C6BDEB920C1A26B009E36BE /* goodsInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BDEB820C1A26B009E36BE /* goodsInfoTableViewCell.m */; };
 		0C782A2820B18F1400B5C834 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2720B18F1400B5C834 /* LoginView.m */; };
 		0C782A2B20B1923E00B5C834 /* LoginNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C782A2A20B1923E00B5C834 /* LoginNavController.m */; };
+		0C8311DF20C412FE00210B2D /* AllgoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8311DE20C412FE00210B2D /* AllgoodsModel.m */; };
+		0C8311E420C4138E00210B2D /* AllgoodsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8311E320C4138E00210B2D /* AllgoodsTableViewCell.m */; };
+		0C8311E920C4146600210B2D /* AllGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8311E820C4146600210B2D /* AllGoodsViewController.m */; };
 		8305560120C120C100DC21BA /* InsertMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8305560020C120C100DC21BA /* InsertMoneyViewController.m */; };
 		831295B220B2C0B40019F6C3 /* UserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 831295B120B2C0B40019F6C3 /* UserInfomation.m */; };
 		8338D19620B65214008B9343 /* UserSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8338D19520B65214008B9343 /* UserSetViewController.m */; };
@@ -106,6 +109,12 @@
 		0C782A2720B18F1400B5C834 /* LoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		0C782A2920B1923E00B5C834 /* LoginNavController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNavController.h; sourceTree = "<group>"; };
 		0C782A2A20B1923E00B5C834 /* LoginNavController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginNavController.m; sourceTree = "<group>"; };
+		0C8311DD20C412FE00210B2D /* AllgoodsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllgoodsModel.h; sourceTree = "<group>"; };
+		0C8311DE20C412FE00210B2D /* AllgoodsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllgoodsModel.m; sourceTree = "<group>"; };
+		0C8311E220C4138E00210B2D /* AllgoodsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllgoodsTableViewCell.h; sourceTree = "<group>"; };
+		0C8311E320C4138E00210B2D /* AllgoodsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllgoodsTableViewCell.m; sourceTree = "<group>"; };
+		0C8311E720C4146600210B2D /* AllGoodsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllGoodsViewController.h; sourceTree = "<group>"; };
+		0C8311E820C4146600210B2D /* AllGoodsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllGoodsViewController.m; sourceTree = "<group>"; };
 		53B3CC458F0D252F890DEDFD /* libPods-Secondary_Market.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Secondary_Market.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		830555FF20C120C100DC21BA /* InsertMoneyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InsertMoneyViewController.h; sourceTree = "<group>"; };
 		8305560020C120C100DC21BA /* InsertMoneyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InsertMoneyViewController.m; sourceTree = "<group>"; };
@@ -385,6 +394,43 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		0C8311DB20C4129A00210B2D /* UserAllGoods */ = {
+			isa = PBXGroup;
+			children = (
+				0C8311E520C4140300210B2D /* Controller */,
+				0C8311E120C4137500210B2D /* View */,
+				0C8311DC20C412D900210B2D /* Model */,
+			);
+			path = UserAllGoods;
+			sourceTree = "<group>";
+		};
+		0C8311DC20C412D900210B2D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0C8311DD20C412FE00210B2D /* AllgoodsModel.h */,
+				0C8311DE20C412FE00210B2D /* AllgoodsModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0C8311E120C4137500210B2D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0C8311E220C4138E00210B2D /* AllgoodsTableViewCell.h */,
+				0C8311E320C4138E00210B2D /* AllgoodsTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0C8311E520C4140300210B2D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0C8311E720C4146600210B2D /* AllGoodsViewController.h */,
+				0C8311E820C4146600210B2D /* AllGoodsViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		706FC8B57134C6D236B5387E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -566,6 +612,7 @@
 		83F67C4520B0527500B9292F /* UserView */ = {
 			isa = PBXGroup;
 			children = (
+				0C8311DB20C4129A00210B2D /* UserAllGoods */,
 				0C6BDEA920C04010009E36BE /* MoneyView */,
 				0C6A866E20B5858600C8D350 /* View */,
 				83F67C5D20B0580E00B9292F /* Controller */,
@@ -878,8 +925,11 @@
 				0C6BDE9E20BC2E18009E36BE /* goodsInfoModel.m in Sources */,
 				83F67C5420B055A600B9292F /* CommunityViewNavController.m in Sources */,
 				0C6A867120B585AB00C8D350 /* UserTableViewCell.m in Sources */,
+				0C8311DF20C412FE00210B2D /* AllgoodsModel.m in Sources */,
 				83F67C1E20B04F4200B9292F /* main.m in Sources */,
 				83F67C4B20B0534A00B9292F /* RootViewController.m in Sources */,
+				0C8311E920C4146600210B2D /* AllGoodsViewController.m in Sources */,
+				0C8311E420C4138E00210B2D /* AllgoodsTableViewCell.m in Sources */,
 				83F67C5C20B057B100B9292F /* UserViewNavController.m in Sources */,
 				0C67CAD320B8306000B1CCC4 /* AddGoodsViewController.m in Sources */,
 				0C1F44A020B2EDC600D177A5 /* RegisterViewController.m in Sources */,

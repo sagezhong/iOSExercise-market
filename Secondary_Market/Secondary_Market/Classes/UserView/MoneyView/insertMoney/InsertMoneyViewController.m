@@ -36,7 +36,7 @@
     
  //   [self.view addSubview:moneyLable];
     
-    self.moneyNumeber = [[UILabel alloc] initWithFrame:CGRectMake(175/2, 220, 200, 80)];
+    self.moneyNumeber = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, 375, 80)];
     self.moneyNumeber.text = [NSString stringWithFormat:@"¥%@",money];
     self.moneyNumeber.textAlignment = NSTextAlignmentCenter;
     self.moneyNumeber.font = [UIFont systemFontOfSize:50];

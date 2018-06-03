@@ -68,7 +68,8 @@
     self.inputMoney = [[UITextField alloc] initWithFrame:CGRectMake(50, 125, 300, 40)];
     self.inputMoney.keyboardType = UIKeyboardTypeNumberPad;
     self.inputMoney.font = [UIFont systemFontOfSize:50];
-    [[UITextField  appearance] setTintColor:[UIColor blackColor]];
+  //  [[UITextField  appearance] setTintColor:[UIColor blackColor]];
+    self.inputMoney.tintColor = [UIColor blackColor];
     
     [whiteBgView addSubview:self.inputMoney];
     
@@ -161,12 +162,22 @@
         
         NSString *userID = [userDefaults objectForKey:@"id"];
         NSString *balance =[self.inputMoney text];
+      //  double a = [balance doubleValue];
+      //  NSString *tmp= [userDefaults objectForKey:@"balance"];
+       // double b = [tmp doubleValue];
+      //  double c = a + b;
+      //  NSNumber *result = [NSNumber numberWithDouble:c];
+        NSNumber *beforeMoney = [userDefaults objectForKey:@"balance"];
+        
         double a = [balance doubleValue];
-        NSNumber *tmp= [userDefaults objectForKey:@"balance"];
-        double b = [tmp doubleValue];
+        double b = [beforeMoney doubleValue];
         double c = a + b;
         
         NSNumber *result = [NSNumber numberWithDouble:c];
+        
+        
+        NSLog(@"%@",result);
+        
         
         
         
@@ -185,7 +196,7 @@
             NSLog(@"%@",dic);
             NSString *result1 = [dic objectForKey:@"data"];
             NSLog(@"看一看%@",result1);
-            if ([result1 isEqual:@"1"]) {
+            if ([result1 isEqual:@"更新成功"]) {
                 
             
          

@@ -10,7 +10,7 @@
 
 @interface CheckGoodsModel : NSObject
 
-@property (nonatomic , strong) NSString *goodsId;   //订单编号
+@property (nonatomic , strong) NSNumber *goodsId;   //订单编号
 
 @property (nonatomic, strong) NSString *userId;    //订单用户id
 

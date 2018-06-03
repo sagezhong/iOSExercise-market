@@ -36,6 +36,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"商品详情";
     NSLog(@"看一下有没有值传过来   %@",self.checkGoodsModel.goodName);
+    NSLog(@"看一下商品ID是什么 %@",self.checkGoodsModel.goodsId);
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -64,6 +65,7 @@
     [createBtn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [createBtn1 setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     createBtn1.backgroundColor = [UIColor colorWithRed:59/255.0 green:89/255.0 blue:87/255.0 alpha:1];
+    [createBtn1 addTarget:self action:@selector(buyGoods) forControlEvents:UIControlEventTouchUpInside];
     [createView addSubview:createBtn1];
     [createView addSubview:createBtn];
     [self.view addSubview:createView];
@@ -78,11 +80,66 @@
 - (void)setModelWIthGoodsDictionry:(NSDictionary *)dic {
     self.checkGoodsModel = [CheckGoodsModel order];
     [self.checkGoodsModel turnGoodsInfoToModel:dic];
-    
-    
-    
-
 }
+
+- (void)buyGoods{
+    
+    
+     dispatch_async(dispatch_get_main_queue(), ^{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+         manager.requestSerializer.timeoutInterval = 5.0f;
+         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/plain" ,nil];
+         
+         NSNumber *goodsId = self.checkGoodsModel.goodsId;
+         NSNumber *goodsPrice = self.checkGoodsModel.goodPrice;
+         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+         NSString *customer = [userDefaults objectForKey:@"id"];
+         
+         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:customer,@"customer",goodsId,"goodsId",goodsPrice,@"price", nil];
+         if ([customer isEqual:self.checkGoodsModel.userId]) {
+             [SVProgressHUD showInfoWithStatus:@"请不要购买自己的商品"];
+             [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 [SVProgressHUD dismiss];
+             });
+             
+         } else {
+         
+         [manager POST:@"http://119.23.230.116/xianyu/addBuyInfo" parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+             
+         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+             
+             NSString *result = [dict objectForKey:@"data"];
+             if ([result isEqual:@"成功"]) {
+                 [SVProgressHUD showInfoWithStatus:@"购买成功"];
+                 [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                     [SVProgressHUD dismiss];
+                 });
+                 [self.navigationController popViewControllerAnimated:YES];
+             }else if ([result isEqual:@"余额不足"]) {
+                 [SVProgressHUD showInfoWithStatus:@"您的余额不足，请充值"];
+                 [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                     [SVProgressHUD dismiss];
+                 });
+             }
+             
+             
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             [SVProgressHUD showInfoWithStatus:@"服务器连接失败"];
+             [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 [SVProgressHUD dismiss];
+             });
+         }];
+         }
+     });
+}
+
 
 #pragma mark - tableView
 
@@ -143,8 +200,6 @@
         height = a + b - c;
         NSLog(@"%f",height);
         NSLog(@"%@",self.checkGoodsModel.goodImage);
-        
-        
         return cell;
     }
 }

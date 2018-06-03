@@ -119,6 +119,7 @@
             NSLog(@"%@",LoginResult);
             NSLog(@"%@",userdict);
             NSLog(@"%@",[userdict objectForKey:@"name"]);
+            NSLog(@"%@",[userdict objectForKey:@"balance"]);
             
             if ([LoginResult isEqual: @"没有此账号"]) {
                 [SVProgressHUD showInfoWithStatus:@"该用户尚未注册"];
@@ -166,18 +167,9 @@
                //跳转至 首页
                RootViewController *vc = [[RootViewController alloc] init];
                [self presentViewController:vc animated:YES completion:nil];
-             
-               
-              
-               
-                
-                
             }
             
-            // NSLog(@"date结果是:%@",LoginResult);
-            
-            //
-            
+
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             

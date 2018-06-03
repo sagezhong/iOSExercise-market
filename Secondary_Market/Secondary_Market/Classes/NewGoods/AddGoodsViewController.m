@@ -179,9 +179,13 @@
     [createView addSubview:createBtn];
     [bgView addSubview:createView];
     
+    
   //  [self.view addSubview:bgView2];
     self.Bgview = bgView;
     [self.view addSubview:self.Bgview];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTitle:@"取消"];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor clearColor]} forState:UIControlStateHighlighted];
     
 }
 
@@ -272,6 +276,9 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
         });
+        
+        //返回前一页面
+        [self dismissViewControllerAnimated:YES completion:nil];
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

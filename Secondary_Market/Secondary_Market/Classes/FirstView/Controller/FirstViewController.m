@@ -135,11 +135,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void ) viewWillAppear:(BOOL)animated {
-    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
-    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTitle:@"取消"];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor clearColor]} forState:UIControlStateHighlighted];
-}
+
 
 - (void)firstRequest {
     
@@ -247,14 +243,7 @@
         //取出商品的json字符串
          NSArray *goodsArray = [responseObject objectForKey:@"list"];
         
-        //把json转成二进制再转成数组
-        
 
-        
-      //  NSData *jsonData = [goodsJson dataUsingEncoding:NSUTF8StringEncoding];
-      //  NSError *err;
-      //  goodsArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-        //移除当前数组
         [self.modelArray removeAllObjects];
         
         //通过模型赋值
@@ -424,12 +413,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CheckGoodsViewController *vc = [[CheckGoodsViewController alloc] init];
     [vc setModelWIthGoodsDictionry:self.nextArray[indexPath.row]];
-   // NSLog(@"打印看一下有没有%@",self.nextArray[indexPath.row]);
+  //  NSLog(@"打印看一下有没有%@",self.nextArray[indexPath.row]);
+    NSLog(@"看一下索引正确吗%ld",(long)indexPath.row);
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
      self.hidesBottomBarWhenPushed = NO;
-  
 }
-
 
 @end

@@ -1,16 +1,16 @@
 //
-//  goodsInfoModel.h
+//  AllgoodsModel.h
 //  Secondary_Market
 //
-//  Created by Maktub on 28/5/18.
+//  Created by Maktub on 3/6/18.
 //  Copyright © 2018年 sagezhong. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface goodsInfoModel : NSObject
+@interface AllgoodsModel : NSObject
 
-@property (nonatomic , strong) NSNumber *goodsId;   //订单编号
+@property (nonatomic , strong) NSString *goodsId;   //订单编号
 
 @property (nonatomic, strong) NSString *userId;    //订单用户id
 
@@ -26,5 +26,6 @@
 
 + (instancetype)order;
 
-- (goodsInfoModel *)turnGoodsInfoToModel:(NSDictionary *)dict;
+- (AllgoodsModel *)turnGoodsInfoToModel:(NSDictionary *)dict;
+
 @end
